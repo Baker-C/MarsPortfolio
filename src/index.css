@@ -1,1 +1,46 @@
 @import "tailwindcss";
+
+/* Semantic theme variables — light by default, dark via prefers-color-scheme.
+   Mars-inspired: warm neutrals with a rust/terracotta accent. */
+:root {
+  --surface: oklch(0.98 0.008 75);
+  --surface-raised: oklch(1 0 0);
+  --ink: oklch(0.27 0.02 40);
+  --ink-muted: oklch(0.51 0.025 45);
+  --line: oklch(0.9 0.012 75);
+  --accent: oklch(0.58 0.16 40);
+  --accent-strong: oklch(0.5 0.17 38);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: oklch(0.21 0.015 40);
+    --surface-raised: oklch(0.26 0.018 40);
+    --ink: oklch(0.94 0.012 75);
+    --ink-muted: oklch(0.71 0.02 60);
+    --line: oklch(0.33 0.02 40);
+    --accent: oklch(0.7 0.15 45);
+    --accent-strong: oklch(0.78 0.13 55);
+  }
+}
+
+/* Expose the variables as Tailwind color utilities (bg-surface, text-ink, etc.) */
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-ink antialiased;
+  }
+}
