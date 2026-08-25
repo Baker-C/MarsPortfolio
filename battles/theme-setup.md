@@ -24,9 +24,10 @@
   - Long pieces use a paginated reader (book-style next/prev page flips), not scrolling.
   - Describe each page in the concept doc: Home, Writing index, Reader, Gallery (extra), About, Contact.
   - verify: `battles/theme-concept.md` describes every page and how each fits the viewport without scroll.
-- [ ] **5. Build a concept mock** (blocked by 3, 4)
+- [x] **5. Build a concept mock** (blocked by 3, 4)
   - Render one or two representative screens (e.g. Home + Reader) with the real tokens so the concept can be seen, using placeholder writing pieces.
   - verify: `npm run dev` shows the mock screens without scroll at a desktop viewport.
+  - Exceeded: three full design versions built at `/design1`–`/design3` (all pages, all six themes). Screenshots in `docs/autopilot/three-design-versions/screenshots/`.
 - [x] **6. Write Claude design guidelines** (blocked by 2, 4)
   - Write the design rules into the project `CLAUDE.md` so every future session obeys them: token usage, no-scroll rule, paginated-reader pattern, typography, spacing, and what not to do.
   - verify: `CLAUDE.md` exists at the repo root and states each rule from the concept doc.
