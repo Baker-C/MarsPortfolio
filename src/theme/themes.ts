@@ -12,6 +12,19 @@ export type ThemeId =
   | 'yosemite'
   | 'floral'
 
+/**
+ * Layout personality of a theme. Switching themes changes composition as well
+ * as color: each design maps every vibe to a different page arrangement (a new
+ * theme picks whichever existing vibe fits its mood, so designs need no edits).
+ */
+export type ThemeVibe =
+  | 'horizon' // calm horizontal bands, symmetry, wide breathing room
+  | 'grove' // asymmetric vertical split, tall columns, layered depth
+  | 'pond' // floating rounded clusters, scattered stillness
+  | 'bloom' // playful scatter, rotation, mixed scales
+  | 'ridge' // monumental stacked verticals, angular, imposing
+  | 'bouquet' // dense ornamental central cluster, framed
+
 /** Swappable color roles, matching the CSS variables in index.css. */
 export type TokenRole =
   | 'paper'
@@ -37,6 +50,8 @@ export type Theme = {
   label: string
   /** ColorPalette reference image this palette comes from. */
   source: string
+  /** Layout personality — designs recompose per vibe, not per theme id. */
+  vibe: ThemeVibe
   /** Base palette, mirroring the [data-theme] block in index.css. */
   colors: Record<TokenRole, string>
   /** Preview dots for the switcher, in display order. */
@@ -46,6 +61,7 @@ export type Theme = {
 export const themes: Theme[] = [
   {
     id: 'sunset',
+    vibe: 'horizon',
     label: 'Sunset Traveler',
     source: 'ColorPalette/024d1b062c4913f6709f42d129c78183.jpg',
     colors: {
@@ -61,6 +77,7 @@ export const themes: Theme[] = [
   },
   {
     id: 'everglade',
+    vibe: 'grove',
     label: 'Everglade',
     source: 'ColorPalette/08af57c5e6eb804036baa1591fd6c4ed.jpg',
     colors: {
@@ -76,6 +93,7 @@ export const themes: Theme[] = [
   },
   {
     id: 'lilypond',
+    vibe: 'pond',
     label: 'Lily Pond',
     source: 'ColorPalette/4e063adc8b0f9c0088da9bbab97988d0.jpg',
     colors: {
@@ -91,6 +109,7 @@ export const themes: Theme[] = [
   },
   {
     id: 'meadow',
+    vibe: 'bloom',
     label: 'Wild Meadow',
     source: 'ColorPalette/50232d2c96edac36a68aa8352deb215f.jpg',
     colors: {
@@ -106,6 +125,7 @@ export const themes: Theme[] = [
   },
   {
     id: 'yosemite',
+    vibe: 'ridge',
     label: 'Yosemite',
     source: 'ColorPalette/9bf7ad49d6bfca3475a397d2dd8e3abf.jpg',
     colors: {
@@ -121,6 +141,7 @@ export const themes: Theme[] = [
   },
   {
     id: 'floral',
+    vibe: 'bouquet',
     label: 'Vintage Floral',
     source: 'ColorPalette/b140c19c465d94bcfa488dfa8730631e.jpg',
     colors: {

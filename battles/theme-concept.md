@@ -24,6 +24,22 @@ pair. Token roles: `paper` (page), `surface` (cards), `ink` (text), `muted` (sec
 | `yosemite` | Yosemite | `ColorPalette/9bf7ad49….jpg` | Granite Shadows #353326, Valley Moss #897E45, Ivory #EDD9B7, Mistflower (≈#B7B3BE — hex misprinted in image), Summit Blush #EF955F, Meadow Bloom #C46D52 |
 | `floral` | Vintage Floral | `ColorPalette/b140c19c….jpg` | No hexes printed; sampled from swatches: sangria ≈#8E5560, vintage mauve ≈#C08B98, champagne ≈#E8D8C6, pistachio ≈#7B7B52, twilight ≈#46617A, steel blue ≈#7FA3CB |
 
+## Layout vibes (added 2026-08-26)
+
+Themes drive layout as well as color. Each theme carries a `vibe` in
+`src/theme/themes.ts`; every design maps each vibe to a different composition
+of the same pages (Home always fully recomposes; other pages at least visibly
+shift). Assignments, each keyed to the mood of its palette image:
+
+| Theme | Vibe | Composition idea |
+|---|---|---|
+| Sunset Traveler | `horizon` | calm horizontal bands, symmetry, breathing room |
+| Everglade | `grove` | asymmetric vertical split, tall columns, layered depth |
+| Lily Pond | `pond` | floating rounded clusters, scattered stillness |
+| Wild Meadow | `bloom` | playful scatter, rotation, mixed scales |
+| Yosemite | `ridge` | monumental stacked verticals, angular |
+| Vintage Floral | `bouquet` | dense ornamental central cluster, framed |
+
 ## Mood (Vibes/)
 
 Misty pastoral photography, wildflower meadows at golden hour, art-nouveau botanical

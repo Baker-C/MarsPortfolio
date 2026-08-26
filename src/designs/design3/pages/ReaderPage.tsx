@@ -1,10 +1,32 @@
 import { Link, useParams } from 'react-router'
 import { getPiece } from '../../../content/writing'
 import { Reader } from '../../../components/reader/Reader'
+import { useTheme } from '../../../theme/ThemeContext'
+import type { ThemeVibe } from '../../../theme/themes'
 import { HandNote, Stamp, Tape } from '../components/scraps'
+
+/** Subtle per-vibe shift: the sheet under the manuscript, and its frame. */
+const sheetTilt: Record<ThemeVibe, string> = {
+  horizon: 'translate-x-3',
+  grove: 'translate-y-3 rotate-1',
+  pond: 'translate-x-2 translate-y-2 rounded-3xl',
+  bloom: 'rotate-2',
+  ridge: 'translate-y-2',
+  bouquet: 'rotate-1',
+}
+
+const manuscriptFrame: Record<ThemeVibe, string> = {
+  horizon: '',
+  grove: '',
+  pond: 'rounded-3xl',
+  bloom: '-rotate-1',
+  ridge: 'outline outline-2 outline-ink',
+  bouquet: 'outline-dashed outline-2 outline-offset-8 outline-accent/50',
+}
 
 /** A single piece, framed as a taped-down manuscript with the shared Reader. */
 export function ReaderPage() {
+  const { vibe } = useTheme()
   const { slug } = useParams()
   const piece = slug ? getPiece(slug) : undefined
 
@@ -31,9 +53,14 @@ export function ReaderPage() {
     <div className="relative flex h-full items-center justify-center overflow-hidden px-4 pb-4 sm:px-6">
       <div className="relative h-full w-full max-w-2xl">
         {/* pages beneath the manuscript */}
-        <div aria-hidden className="absolute inset-0 rotate-1 border border-edge bg-surface shadow-sm" />
+        <div
+          aria-hidden
+          className={`absolute inset-0 border border-edge bg-surface shadow-sm ${sheetTilt[vibe]}`}
+        />
 
-        <div className="relative flex h-full min-h-0 flex-col border border-edge bg-surface p-5 shadow-xl sm:p-7">
+        <div
+          className={`relative flex h-full min-h-0 flex-col border border-edge bg-surface p-5 shadow-xl sm:p-7 ${manuscriptFrame[vibe]}`}
+        >
           <Tape className="-top-2.5 left-16 -rotate-3" />
           <Tape className="-top-2.5 right-12 rotate-2" />
 

@@ -4,7 +4,9 @@ import type { PieceKind } from '../../../content/writing'
 import { images } from '../../../content/images'
 import { Reader } from '../../../components/reader/Reader'
 import { ArtPlaceholder } from '../../../components/ui/ArtPlaceholder'
+import { useTheme } from '../../../theme/ThemeContext'
 import { Spread } from '../components/Spread'
+import { vibeOrnament } from '../components/vibe'
 
 /** Gallery index whose motif accompanies each kind of piece. */
 const artByKind: Record<PieceKind, number> = {
@@ -16,7 +18,22 @@ const artByKind: Record<PieceKind, number> = {
 
 export function ReaderPage() {
   const { slug } = useParams()
+  const { vibe } = useTheme()
   const piece = slug ? getPiece(slug) : undefined
+
+  // Light vibe response: title-page rule weight and motif-plate treatment.
+  const rule =
+    vibe === 'ridge'
+      ? 'mt-6 block border-t-2 border-ink'
+      : vibe === 'bloom'
+        ? 'mt-6 block w-12 rotate-2 border-t border-edge'
+        : 'mt-6 block w-12 border-t border-edge'
+  const thumb =
+    vibe === 'pond'
+      ? 'h-16 w-28 overflow-hidden rounded-full border border-edge opacity-70'
+      : vibe === 'bloom'
+        ? 'h-16 w-28 rotate-3 opacity-70'
+        : 'h-16 w-28 opacity-70'
 
   if (!piece) {
     return (
@@ -44,13 +61,18 @@ export function ReaderPage() {
       verso={
         <div className="flex h-full min-h-0 flex-col justify-between p-10 lg:p-14">
           <p className="font-sans text-xs tracking-widest uppercase text-muted">
+            {vibe === 'bouquet' && (
+              <span aria-hidden className="mr-3 text-accent">
+                {vibeOrnament.bouquet}
+              </span>
+            )}
             {piece.kind} · {piece.year}
           </p>
           <div className="my-4 min-h-0">
             <h1 className="font-display text-4xl leading-tight text-ink lg:text-5xl">
               {piece.title}
             </h1>
-            <span aria-hidden className="mt-6 block w-12 border-t border-edge" />
+            <span aria-hidden className={rule} />
             <p className="mt-6 max-w-md font-body text-lg italic leading-relaxed text-muted">
               {piece.excerpt}
             </p>
@@ -62,7 +84,7 @@ export function ReaderPage() {
             >
               ← Contents
             </Link>
-            <div className="h-16 w-28 opacity-70">
+            <div className={thumb}>
               <ArtPlaceholder slot={images.gallery[artByKind[piece.kind]]} />
             </div>
           </div>

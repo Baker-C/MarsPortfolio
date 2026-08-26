@@ -29,6 +29,11 @@ rationale lives in `battles/css-architecture.md` and `battles/theme-concept.md`.
    in `index.css` + one entry in `src/theme/themes.ts` (the two MUST stay in
    sync — the registry mirrors each palette), traced to its image in
    `battles/theme-concept.md`. Single mode per theme — no light/dark toggle.
+   Themes also carry a layout `vibe` (horizon/grove/pond/bloom/ridge/bouquet):
+   designs recompose their pages per vibe (never per theme id), so switching
+   themes changes composition as well as color. A new theme reuses whichever
+   existing vibe fits its mood; inventing a new vibe means adding that
+   composition to all three designs.
    Visitors can additionally swap any color role for any preset from the
    collected palette pool (`presetColors` in `themes.ts`) via the switcher's
    customize panel; overrides persist per design+theme in localStorage.

@@ -1,10 +1,44 @@
 import { Link, useParams } from 'react-router'
 import { getPiece } from '../../../content/writing'
 import { Reader } from '../../../components/reader/Reader'
+import { useTheme } from '../../../theme/ThemeContext'
+import type { ThemeVibe } from '../../../theme/themes'
+
+// Subtle per-vibe shifts: rail orientation and attitude, ghost placement.
+const attitudes: Record<
+  ThemeVibe,
+  { section: string; rail: string; ghost: string }
+> = {
+  // Horizon lays the title as a calm top band instead of a side rail.
+  horizon: {
+    section: 'flex-col',
+    rail: 'items-center text-center',
+    ghost: '-bottom-6 left-1/2 -translate-x-1/2',
+  },
+  grove: { section: 'md:flex-row', rail: 'md:w-2/5', ghost: '-bottom-6 -left-2' },
+  pond: {
+    section: 'md:flex-row',
+    rail: 'md:w-2/5 md:rounded-r-3xl',
+    ghost: '-bottom-6 -right-2',
+  },
+  bloom: {
+    section: 'md:flex-row',
+    rail: 'md:w-2/5',
+    ghost: '-top-6 -right-2 rotate-6',
+  },
+  ridge: {
+    section: 'md:flex-row',
+    rail: 'md:w-2/5',
+    ghost: '-bottom-6 -left-2 -skew-y-6',
+  },
+  bouquet: { section: 'md:flex-row', rail: 'md:w-2/5', ghost: '-bottom-6 -left-2' },
+}
 
 export function ReaderPage() {
+  const { vibe } = useTheme()
   const { slug } = useParams()
   const piece = slug ? getPiece(slug) : undefined
+  const attitude = attitudes[vibe]
 
   if (!piece) {
     return (
@@ -33,12 +67,14 @@ export function ReaderPage() {
   }
 
   return (
-    <section className="flex h-full flex-col overflow-hidden md:flex-row">
+    <section className={`flex h-full flex-col overflow-hidden ${attitude.section}`}>
       {/* Title rail: the poster half */}
-      <div className="relative flex shrink-0 flex-col justify-between overflow-hidden bg-accent p-6 md:w-2/5 md:p-10">
+      <div
+        className={`relative flex shrink-0 flex-col justify-between overflow-hidden bg-accent p-6 md:p-8 ${attitude.rail}`}
+      >
         <p
           aria-hidden="true"
-          className="pointer-events-none absolute -bottom-6 -left-2 font-display text-9xl leading-none font-bold tracking-tighter text-paper/10 uppercase select-none"
+          className={`pointer-events-none absolute font-display text-9xl leading-none font-bold tracking-tighter text-paper/10 uppercase select-none ${attitude.ghost}`}
         >
           {piece.kind}
         </p>

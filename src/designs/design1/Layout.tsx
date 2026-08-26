@@ -1,7 +1,18 @@
 import { Link, NavLink, Outlet, useLocation } from 'react-router'
-import { ThemeScope } from '../../theme/ThemeContext'
+import { ThemeScope, useTheme } from '../../theme/ThemeContext'
 import { ThemeSwitcher } from '../../theme/ThemeSwitcher'
 import { site } from '../../content/site'
+import { vibeOrnament } from './components/vibe'
+
+/** Folio ornament that follows the active vibe (rendered inside ThemeScope). */
+function FolioOrnament() {
+  const { vibe } = useTheme()
+  return (
+    <span aria-hidden className="hidden text-accent sm:block">
+      {vibeOrnament[vibe]}
+    </span>
+  )
+}
 
 function folio(rel: string): { no: string; label: string } {
   if (rel === '') return { no: '01', label: 'Frontispiece' }
@@ -73,9 +84,7 @@ export function Layout() {
 
           <footer className="flex shrink-0 items-center justify-between gap-4 border-t border-edge px-4 py-2 font-sans text-xs tracking-widest uppercase text-muted sm:px-8">
             <span className="truncate">{site.title}</span>
-            <span aria-hidden className="hidden text-accent sm:block">
-              ❦
-            </span>
+            <FolioOrnament />
             <span className="whitespace-nowrap">
               {label} · Pg. No. {no}
             </span>

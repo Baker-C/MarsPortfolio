@@ -1,11 +1,24 @@
 import { site } from '../../../content/site'
 import { images } from '../../../content/images'
 import { ArtPlaceholder } from '../../../components/ui/ArtPlaceholder'
+import { useTheme } from '../../../theme/ThemeContext'
+import type { ThemeVibe } from '../../../theme/themes'
 import { HandNote, Stamp, Tape } from '../components/scraps'
 
 const linkTilts = ['-rotate-2', 'rotate-2', '-rotate-1']
 
+/** Subtle per-vibe shift: how the letter sits on the board. */
+const letterTilt: Record<ThemeVibe, string> = {
+  horizon: '',
+  grove: 'rotate-1',
+  pond: 'rounded-3xl',
+  bloom: '-rotate-3',
+  ridge: 'outline outline-2 outline-ink',
+  bouquet: '-rotate-1 outline-dashed outline-2 outline-offset-8 outline-accent/50',
+}
+
 export function Contact() {
+  const { vibe } = useTheme()
   const { heading, blurb, email, links } = site.contact
   const scrap = images.gallery[images.gallery.length - 1]
 
@@ -21,7 +34,9 @@ export function Contact() {
         </div>
 
         {/* the letter */}
-        <div className="relative z-10 -rotate-1 border border-edge bg-surface p-6 shadow-xl transition-transform hover:rotate-0 sm:p-8">
+        <div
+          className={`relative z-10 border border-edge bg-surface p-6 shadow-xl transition-transform hover:rotate-0 sm:p-8 ${letterTilt[vibe]}`}
+        >
           <Tape className="-top-2.5 left-14 -rotate-3" />
           <Tape className="-top-2.5 right-10 rotate-2" />
           <div

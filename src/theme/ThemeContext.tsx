@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
 import { defaultTheme, getTheme, isThemeId, tokenRoles } from './themes'
-import type { ThemeId, TokenRole } from './themes'
+import type { ThemeId, ThemeVibe, TokenRole } from './themes'
 import {
   defaultFontSet,
   fontRoles,
@@ -20,6 +20,8 @@ export type FontOverrides = Record<string, Partial<Record<FontRole, string>>>
 
 type ThemeContextValue = {
   theme: ThemeId
+  /** Layout personality of the active theme — designs recompose on this. */
+  vibe: ThemeVibe
   setTheme: (theme: ThemeId) => void
   /** Color overrides for the ACTIVE theme only. */
   overrides: Partial<Record<TokenRole, string>>
@@ -190,6 +192,7 @@ export function ThemeScope({
     <ThemeContext.Provider
       value={{
         theme,
+        vibe: getTheme(theme).vibe,
         setTheme,
         overrides,
         setColorOverride,
