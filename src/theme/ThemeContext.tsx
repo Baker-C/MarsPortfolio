@@ -1,18 +1,52 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import type { ReactNode } from 'react'
-import { defaultTheme, isThemeId } from './themes'
-import type { ThemeId } from './themes'
+import type { CSSProperties, ReactNode } from 'react'
+import { defaultTheme, getTheme, isThemeId, tokenRoles } from './themes'
+import type { ThemeId, TokenRole } from './themes'
+
+/** Per-theme user color overrides: role -> preset hex. */
+export type ThemeOverrides = Partial<Record<ThemeId, Partial<Record<TokenRole, string>>>>
 
 type ThemeContextValue = {
   theme: ThemeId
   setTheme: (theme: ThemeId) => void
+  /** Overrides for the ACTIVE theme only. */
+  overrides: Partial<Record<TokenRole, string>>
+  /** hex to override with, or null to restore the theme default. */
+  setColorOverride: (role: TokenRole, hex: string | null) => void
+  resetOverrides: () => void
+  /** Effective color of a role in the active theme (override or base). */
+  effectiveColor: (role: TokenRole) => string
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
+function loadOverrides(storageKey: string): ThemeOverrides {
+  try {
+    const raw = localStorage.getItem(storageKey)
+    if (!raw) return {}
+    const parsed: unknown = JSON.parse(raw)
+    if (typeof parsed !== 'object' || parsed === null) return {}
+    const clean: ThemeOverrides = {}
+    for (const [themeId, roles] of Object.entries(parsed)) {
+      if (!isThemeId(themeId) || typeof roles !== 'object' || roles === null) continue
+      for (const { role } of tokenRoles) {
+        const hex = (roles as Record<string, unknown>)[role]
+        if (typeof hex === 'string' && /^#[0-9a-f]{6}$/i.test(hex)) {
+          ;(clean[themeId] ??= {})[role] = hex
+        }
+      }
+    }
+    return clean
+  } catch {
+    return {}
+  }
+}
+
 /**
  * Wraps one design in a themable scope: sets data-theme (which activates a
- * palette from src/index.css) and remembers the choice per design.
+ * palette from src/index.css) and remembers the choice per design. User color
+ * overrides (preset swaps from the customize panel) are applied as inline CSS
+ * variable overlays on the scope — user data, not styling (see CLAUDE.md).
  */
 export function ThemeScope({
   designKey,
@@ -23,20 +57,58 @@ export function ThemeScope({
   initialTheme?: ThemeId
   children: ReactNode
 }) {
-  const storageKey = `mars-theme:${designKey}`
+  const themeKey = `mars-theme:${designKey}`
+  const overridesKey = `mars-theme-overrides:${designKey}`
+
   const [theme, setTheme] = useState<ThemeId>(() => {
-    const stored = localStorage.getItem(storageKey)
+    const stored = localStorage.getItem(themeKey)
     return isThemeId(stored) ? stored : initialTheme
   })
+  const [allOverrides, setAllOverrides] = useState<ThemeOverrides>(() =>
+    loadOverrides(overridesKey),
+  )
 
   useEffect(() => {
-    localStorage.setItem(storageKey, theme)
-  }, [storageKey, theme])
+    localStorage.setItem(themeKey, theme)
+  }, [themeKey, theme])
+
+  useEffect(() => {
+    localStorage.setItem(overridesKey, JSON.stringify(allOverrides))
+  }, [overridesKey, allOverrides])
+
+  const overrides = allOverrides[theme] ?? {}
+
+  const setColorOverride = (role: TokenRole, hex: string | null) => {
+    setAllOverrides((prev) => {
+      const forTheme = { ...(prev[theme] ?? {}) }
+      if (hex === null) delete forTheme[role]
+      else forTheme[role] = hex
+      return { ...prev, [theme]: forTheme }
+    })
+  }
+
+  const resetOverrides = () => {
+    setAllOverrides((prev) => ({ ...prev, [theme]: {} }))
+  }
+
+  const effectiveColor = (role: TokenRole) =>
+    overrides[role] ?? getTheme(theme).colors[role]
+
+  // CSS variable overlay for the overridden roles; edge tracks ink (~18% alpha)
+  // the same way each theme block does in index.css.
+  const overlay: Record<string, string> = {}
+  for (const [role, hex] of Object.entries(overrides)) {
+    overlay[`--${role}`] = hex
+  }
+  if (overrides.ink) overlay['--edge'] = `${overrides.ink}2e`
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider
+      value={{ theme, setTheme, overrides, setColorOverride, resetOverrides, effectiveColor }}
+    >
       <div
         data-theme={theme}
+        style={overlay as CSSProperties}
         className="min-h-dvh bg-paper font-body text-ink transition-colors duration-300"
       >
         {children}

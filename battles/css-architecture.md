@@ -6,7 +6,8 @@
 
 Additions made during implementation:
 - Six color themes (one per `reference-theme-photos/ColorPalette` image), switchable at runtime: `src/index.css` defines each as a `[data-theme]` variable block feeding the same semantic `@theme inline` tokens; `src/theme/` (themes registry, `ThemeScope` provider setting `data-theme`, `ThemeSwitcher` control in every design's top right). Retheming = editing `index.css`; adding a theme = one CSS block + one registry entry.
-- Image slots are placeholder line art (`ArtPlaceholder` in `ui/`) rendered in theme colors until real photos land; `images.ts` slots carry alt/caption either way. One sanctioned `style=` exception: `ThemeSwitcher` swatch dots preview literal palette hexes (that's data, not styling).
+- Image slots are placeholder line art (`ArtPlaceholder` in `ui/`) rendered in theme colors until real photos land; `images.ts` slots carry alt/caption either way. Sanctioned `style=` exceptions (data, not styling): `ThemeSwitcher` swatch/preset dots preview literal palette hexes, and `ThemeScope` applies user color overrides as an inline CSS-variable overlay.
+- Per-role color customization (added 2026-08-26): the switcher's customize panel lets a visitor swap any token role (paper/surface/ink/muted/accent/accent-2/highlight) for any preset color from the pooled ColorPalette swatches (`presetColors` in `src/theme/themes.ts`). Overrides ride on top of the active theme as CSS-variable overlays in `ThemeScope` (edge re-derives from an overridden ink), persist per design+theme in localStorage, and reset per theme. The theme registry now mirrors each `[data-theme]` palette (`colors` map) so the UI can show effective colors; index.css and themes.ts must change together.
 
 ## The four layers
 

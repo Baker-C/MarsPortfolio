@@ -19,12 +19,18 @@ rationale lives in `battles/css-architecture.md` and `battles/theme-concept.md`.
 
 1. Tokens only: components use semantic utilities (`bg-paper`, `text-ink`,
    `text-accent`, `border-edge`, `font-display`, …). No hex values, no
-   arbitrary values (`bg-[#123]`), no `style=`, no new CSS files. (One
-   sanctioned exception: `ThemeSwitcher` swatch dots preview palette hexes.)
+   arbitrary values (`bg-[#123]`), no `style=`, no new CSS files. (Two
+   sanctioned exceptions, both user data rather than styling: `ThemeSwitcher`
+   swatch/preset dots preview palette hexes, and `ThemeScope` applies the
+   user's per-role color overrides as an inline CSS-variable overlay.)
 2. Every color theme maps 1:1 to an image in `reference-theme-photos/ColorPalette/`
    (folder is local-only/gitignored). Adding a theme = one `[data-theme]` block
-   in `index.css` + one entry in `src/theme/themes.ts`, traced to its image in
+   in `index.css` + one entry in `src/theme/themes.ts` (the two MUST stay in
+   sync — the registry mirrors each palette), traced to its image in
    `battles/theme-concept.md`. Single mode per theme — no light/dark toggle.
+   Visitors can additionally swap any color role for any preset from the
+   collected palette pool (`presetColors` in `themes.ts`) via the switcher's
+   customize panel; overrides persist per design+theme in localStorage.
 3. Components never import content; data arrives via props. Pages are the only
    layer importing `src/content/`.
 4. Images only through semantic slots in `src/content/images.ts` (`{src, alt}`
