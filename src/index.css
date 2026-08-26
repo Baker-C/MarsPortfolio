@@ -1,5 +1,51 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=Archivo:wght@400..700&family=Caveat:wght@400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=Archivo:wght@400..700&family=Caveat:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Cormorant+Garamond:ital,wght@0,400..700;1,400..700&family=Libre+Franklin:ital,wght@0,400..700;1,400..700&family=Exo+2:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400..700&family=Barlow+Condensed:wght@400;600&family=Oswald:wght@400..600&family=Josefin+Sans:wght@400..600&family=Cinzel:wght@400..700&family=Permanent+Marker&family=Rock+Salt&family=Great+Vibes&display=swap");
 @import "tailwindcss";
+
+/* Title fonts from 1001fonts.com (see src/theme/fonts.ts for the registry and
+   licensing note — demo / personal-use files in public/fonts/). */
+@font-face {
+  font-family: "Rafgins";
+  src: url("/fonts/rafgins.otf") format("opentype");
+  font-display: swap;
+}
+/* The demo-licensed faces watermark digits/punctuation ("TRIAL FONT"
+   glyphs), so they are restricted to letters; everything else falls back to
+   the next font in the role's stack. */
+@font-face {
+  font-family: "Changes Together";
+  src: url("/fonts/changes-together.ttf") format("truetype");
+  font-display: swap;
+  unicode-range: U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: "Generate Condensed";
+  src: url("/fonts/generate-condensed.otf") format("opentype");
+  font-display: swap;
+  unicode-range: U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: "The Walkyr";
+  src: url("/fonts/the-walkyr.ttf") format("truetype");
+  font-display: swap;
+  unicode-range: U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: "Uncharted Resilience";
+  src: url("/fonts/uncharted-resilience.ttf") format("truetype");
+  font-display: swap;
+  unicode-range: U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: "Nocture Stars";
+  src: url("/fonts/nocture-stars.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Protest";
+  src: url("/fonts/protest.ttf") format("truetype");
+  font-display: swap;
+  unicode-range: U+0041-005A, U+0061-007A;
+}
 
 /*
  * Design tokens — semantic only. Components use token-backed utilities
@@ -21,10 +67,21 @@
   --color-highlight: var(--highlight);
   --color-edge: var(--edge);
 
-  --font-display: "Fraunces", Georgia, serif;
-  --font-body: "Newsreader", Georgia, serif;
-  --font-sans: "Archivo", system-ui, sans-serif;
-  --font-hand: "Caveat", cursive;
+  /* Font roles resolve through runtime variables so font sets and per-role
+     overrides can swap them (registry: src/theme/fonts.ts; ThemeScope writes
+     the --fd/--fb/--fs/--fh overlay). */
+  --font-display: var(--fd);
+  --font-body: var(--fb);
+  --font-sans: var(--fs);
+  --font-hand: var(--fh);
+}
+
+/* Default typography = the 'classic' font set (kept in sync with fonts.ts). */
+:root {
+  --fd: "Fraunces", Georgia, serif;
+  --fb: "Newsreader", Georgia, serif;
+  --fs: "Archivo", system-ui, sans-serif;
+  --fh: "Caveat", cursive;
 }
 
 /* Markdown output inside the paginated reader (Tailwind preflight strips

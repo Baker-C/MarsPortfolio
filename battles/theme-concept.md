@@ -46,6 +46,17 @@ Key files: `Vibes/0725d3bd…` (zine spread with sheep field + green stamps),
    Traced to: `FeatureDesign/00609918…` ("Reading the Tree" photo-collage),
    `FeatureDesign/cb6b5c05…` (letter card floating over a photo).
 
+## Fonts (added 2026-08-26)
+
+Seven title fonts requested by name, all sourced from 1001fonts.com (demo /
+free-for-personal-use; buy licenses before commercial use): Rafgins, Changes
+Together, Generate Condensed, The Walkyr, Uncharted Resilience, Nocture Stars,
+Protest. Each leads a selectable font set with supporting Google Fonts matched
+to its voice (registry: `src/theme/fonts.ts`); 'Classic Folio'
+(Fraunces/Newsreader/Archivo/Caveat) remains the default. Roles: Titles
+(display) / Body / Labels (sans) / Handwriting. Sets are switchable per design,
+and every role can be individually overridden from the full pool.
+
 ## Layout rules (all designs)
 
 - Multi-page react-router structure: Home, Writing index, Reader (`writing/:slug`),
