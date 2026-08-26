@@ -58,7 +58,7 @@ export function ThemeSwitcher() {
   }
 
   return (
-    <div ref={rootRef} className="relative font-sans text-sm">
+    <div ref={rootRef} className="relative font-ui text-sm">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}

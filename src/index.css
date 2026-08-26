@@ -74,6 +74,11 @@
   --font-body: var(--fb);
   --font-sans: var(--fs);
   --font-hand: var(--fh);
+
+  /* Static UI font for the appearance drawer itself — deliberately NOT
+     routed through the runtime font variables, so the switcher keeps its own
+     basic face while the site's fonts change. */
+  --font-ui: "Archivo", system-ui, sans-serif;
 }
 
 /* Default typography = the 'classic' font set (kept in sync with fonts.ts). */
