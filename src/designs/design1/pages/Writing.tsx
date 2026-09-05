@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { Link } from 'react-router'
-import { pieces } from '../../../content/writing'
-import type { Piece } from '../../../content/writing'
+import { pieces, sections } from '../../../content/writing'
+import type { Piece, PieceSection } from '../../../content/writing'
 import { images } from '../../../content/images'
 import { useTheme } from '../../../theme/ThemeContext'
 import type { ThemeVibe } from '../../../theme/themes'
@@ -45,18 +44,47 @@ function Pager({
   )
 }
 
-function TocHeading({ align = 'text-center' }: { align?: string }) {
+function TocHeading({
+  align = 'text-center',
+  section,
+  setSection,
+}: {
+  align?: string
+  section: PieceSection
+  setSection: (section: PieceSection) => void
+}) {
+  const centered = align === 'text-center'
   return (
     <div className={align}>
       <p className="font-sans text-xs tracking-widest uppercase text-muted">
         Table of Contents
       </p>
       <h2 className="mt-2 font-display text-3xl text-ink md:text-4xl">Writing</h2>
+      <div
+        className={`mt-3 flex items-center gap-5 font-sans text-xs tracking-widest uppercase ${
+          centered ? 'justify-center' : 'justify-start'
+        }`}
+      >
+        {sections.map(({ key, label }) => (
+          <button
+            key={key}
+            type="button"
+            onClick={() => setSection(key)}
+            className={`border-b pb-0.5 transition-colors ${
+              key === section
+                ? 'border-accent text-accent'
+                : 'border-transparent text-muted hover:text-ink'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
     </div>
   )
 }
 
-/** The contents list, re-set per vibe. */
+/** The contents list, re-set per vibe. Every entry links out to the original. */
 function TocList({
   vibe,
   visible,
@@ -68,13 +96,15 @@ function TocList({
 }) {
   switch (vibe) {
     case 'horizon':
-      // Symmetric full-width bands: numeral left, centered title, year right.
+      // Symmetric full-width bands: numeral left, centered title, venue right.
       return (
         <ol className="w-full">
           {visible.map((piece, idx) => (
             <li key={piece.slug} className={idx > 0 ? 'border-t border-edge' : ''}>
-              <Link
-                to={`/design1/writing/${piece.slug}`}
+              <a
+                href={piece.url}
+                target="_blank"
+                rel="noreferrer"
                 className="group flex items-baseline gap-4 py-4"
               >
                 <span className="w-8 shrink-0 font-display text-sm text-muted">
@@ -94,9 +124,9 @@ function TocList({
                   className="hidden min-w-6 flex-1 border-b border-dotted border-edge sm:block"
                 />
                 <span className="shrink-0 font-sans text-xs tracking-widest uppercase text-muted">
-                  {piece.kind} · {piece.year}
+                  {piece.venue} · {piece.year}
                 </span>
-              </Link>
+              </a>
             </li>
           ))}
         </ol>
@@ -107,8 +137,10 @@ function TocList({
         <ol className="w-full">
           {visible.map((piece, idx) => (
             <li key={piece.slug} className={idx > 0 ? 'border-t border-edge' : ''}>
-              <Link
-                to={`/design1/writing/${piece.slug}`}
+              <a
+                href={piece.url}
+                target="_blank"
+                rel="noreferrer"
                 className="group flex items-center gap-5 py-3.5 md:py-4"
               >
                 <span className="w-10 shrink-0 font-display text-2xl text-accent">
@@ -119,10 +151,10 @@ function TocList({
                     {piece.title}
                   </span>
                   <span className="mt-0.5 block font-sans text-xs tracking-widest uppercase text-muted">
-                    {piece.kind} · {piece.year}
+                    {piece.venue} · {piece.year}
                   </span>
                 </span>
-              </Link>
+              </a>
             </li>
           ))}
         </ol>
@@ -133,8 +165,10 @@ function TocList({
         <ol className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
           {visible.map((piece, idx) => (
             <li key={piece.slug} className={idx % 2 === 0 ? 'sm:mb-6' : 'sm:mt-6'}>
-              <Link
-                to={`/design1/writing/${piece.slug}`}
+              <a
+                href={piece.url}
+                target="_blank"
+                rel="noreferrer"
                 className="group block rounded-3xl border border-edge px-6 py-5 text-center transition-colors hover:bg-surface"
               >
                 <span className="block font-display text-sm text-muted">
@@ -144,9 +178,9 @@ function TocList({
                   {piece.title}
                 </span>
                 <span className="mt-1 block font-sans text-xs tracking-widest uppercase text-muted">
-                  {piece.kind} · {piece.year}
+                  {piece.venue} · {piece.year}
                 </span>
-              </Link>
+              </a>
             </li>
           ))}
         </ol>
@@ -164,7 +198,12 @@ function TocList({
                   even ? '-rotate-1 self-start text-left' : 'rotate-1 self-end text-right'
                 }
               >
-                <Link to={`/design1/writing/${piece.slug}`} className="group inline-block">
+                <a
+                  href={piece.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group inline-block"
+                >
                   <span
                     className={`block font-display text-ink transition-colors group-hover:text-accent ${
                       even ? 'text-2xl md:text-3xl' : 'text-lg md:text-xl'
@@ -173,9 +212,9 @@ function TocList({
                     {piece.title}
                   </span>
                   <span className="mt-0.5 block font-sans text-xs tracking-widest uppercase text-muted">
-                    {roman(start + idx)} · {piece.kind} · {piece.year}
+                    {roman(start + idx)} · {piece.venue} · {piece.year}
                   </span>
-                </Link>
+                </a>
               </li>
             )
           })}
@@ -187,8 +226,10 @@ function TocList({
         <ol className="w-full border-b-2 border-ink">
           {visible.map((piece, idx) => (
             <li key={piece.slug} className="border-t-2 border-ink">
-              <Link
-                to={`/design1/writing/${piece.slug}`}
+              <a
+                href={piece.url}
+                target="_blank"
+                rel="noreferrer"
                 className="group flex items-center gap-6 py-3"
               >
                 <span className="w-14 shrink-0 font-display text-4xl text-accent">
@@ -199,16 +240,16 @@ function TocList({
                     {piece.title}
                   </span>
                   <span className="mt-0.5 block font-sans text-xs tracking-widest uppercase text-muted">
-                    {piece.kind} · {piece.year}
+                    {piece.venue} · {piece.year}
                   </span>
                 </span>
                 <span
                   aria-hidden
                   className="shrink-0 font-sans text-xs tracking-widest uppercase text-muted transition-colors group-hover:text-accent"
                 >
-                  →
+                  ↗
                 </span>
-              </Link>
+              </a>
             </li>
           ))}
         </ol>
@@ -224,14 +265,19 @@ function TocList({
                   ❧
                 </p>
               )}
-              <Link to={`/design1/writing/${piece.slug}`} className="group block py-1.5">
+              <a
+                href={piece.url}
+                target="_blank"
+                rel="noreferrer"
+                className="group block py-1.5"
+              >
                 <span className="block font-sans text-xs tracking-widest uppercase text-muted">
-                  {roman(start + idx)} · {piece.kind} · {piece.year}
+                  {roman(start + idx)} · {piece.venue} · {piece.year}
                 </span>
                 <span className="mt-0.5 block font-display text-xl text-ink transition-colors group-hover:text-accent">
                   {piece.title}
                 </span>
-              </Link>
+              </a>
             </li>
           ))}
         </ol>
@@ -241,10 +287,17 @@ function TocList({
 
 export function Writing() {
   const { vibe } = useTheme()
+  const [section, setSection] = useState<PieceSection>('creative')
   const [page, setPage] = useState(0)
-  const pageCount = Math.ceil(pieces.length / PER_PAGE)
+  const inSection = pieces.filter((piece) => piece.section === section)
+  const pageCount = Math.ceil(inSection.length / PER_PAGE)
   const start = page * PER_PAGE
-  const visible = pieces.slice(start, start + PER_PAGE)
+  const visible = inSection.slice(start, start + PER_PAGE)
+
+  const pickSection = (next: PieceSection) => {
+    setSection(next)
+    setPage(0)
+  }
 
   const pager =
     pageCount > 1 ? <Pager page={page} pageCount={pageCount} setPage={setPage} /> : null
@@ -257,7 +310,7 @@ export function Writing() {
         verso={<PlatePanel slot={images.gallery[4]} caption="Grasslands · screen print" />}
         recto={
           <div className="flex h-full min-h-0 flex-col justify-center px-6 py-6 md:px-12 lg:px-14">
-            <TocHeading align="text-left" />
+            <TocHeading align="text-left" section={section} setSection={pickSection} />
             <span aria-hidden className="mt-4 w-12 border-t border-edge" />
             <div className="mt-5 md:mt-8">{list}</div>
             {pager}
@@ -273,7 +326,7 @@ export function Writing() {
       <div className="flex h-full min-h-0 items-center justify-center p-4 md:p-6">
         <div className="h-full w-full max-w-2xl border border-edge p-2">
           <div className="flex h-full min-h-0 flex-col items-center justify-center border border-edge px-6 py-6 md:px-10">
-            <TocHeading />
+            <TocHeading section={section} setSection={pickSection} />
             <span aria-hidden className="mt-3 w-24 border-t border-edge" />
             <span aria-hidden className="mt-1 w-14 border-t border-edge" />
             <div className="mt-5">{list}</div>
@@ -297,7 +350,11 @@ export function Writing() {
       <div
         className={`flex h-full min-h-0 w-full flex-col justify-center ${leaf[vibe as Exclude<ThemeVibe, 'grove' | 'bouquet'>]}`}
       >
-        <TocHeading align={vibe === 'ridge' ? 'text-left' : 'text-center'} />
+        <TocHeading
+          align={vibe === 'ridge' ? 'text-left' : 'text-center'}
+          section={section}
+          setSection={pickSection}
+        />
         {vibe !== 'ridge' && (
           <span aria-hidden className="mx-auto mt-4 w-12 border-t border-edge" />
         )}

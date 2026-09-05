@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { Link } from 'react-router'
-import { pieces } from '../../../content/writing'
-import type { PieceKind } from '../../../content/writing'
+import { pieces, sections } from '../../../content/writing'
+import type { PieceKind, PieceSection } from '../../../content/writing'
 import { useTheme } from '../../../theme/ThemeContext'
 import type { ThemeVibe } from '../../../theme/themes'
 import { HandNote, Pager, Stamp, Tape } from '../components/scraps'
@@ -117,15 +116,22 @@ const layouts: Record<ThemeVibe, VibeLayout> = {
   },
 }
 
-/** The writing index as a pile of index cards — paged, never scrolled. */
+/** The writing index as a pile of index cards — paged, never scrolled.
+ *  Two piles, one per section; every card links out to the original. */
 export function Writing() {
   const { vibe } = useTheme()
   const L = layouts[vibe]
-  const n = pieces.length
+  const [section, setSection] = useState<PieceSection>('creative')
   const [i, setI] = useState(0)
-  const piece = pieces[i]
+  const pile = pieces.filter((p) => p.section === section)
+  const n = pile.length
+  const piece = pile[i]
   const prev = () => setI((v) => (v - 1 + n) % n)
   const next = () => setI((v) => (v + 1) % n)
+  const pickSection = (target: PieceSection) => {
+    setSection(target)
+    setI(0)
+  }
 
   return (
     <div
@@ -147,21 +153,44 @@ export function Writing() {
           {L.tapes.map((cls) => (
             <Tape key={cls} className={cls} />
           ))}
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <Stamp className={kindStamp[piece.kind]}>{piece.kind}</Stamp>
             <span className="font-sans text-xs tracking-widest uppercase text-muted">
-              {piece.year}
+              {piece.venue} · {piece.year}
+            </span>
+            <span className="ml-auto flex items-center gap-2">
+              {sections.map(({ key, label }) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => pickSection(key)}
+                  className={`border px-2 py-0.5 font-sans text-xs tracking-widest uppercase transition-colors ${
+                    key === section
+                      ? 'border-ink bg-accent text-paper'
+                      : 'border-edge bg-paper text-muted hover:border-ink hover:text-ink'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
             </span>
           </div>
           <h2 className="mt-3 font-display text-3xl text-ink sm:text-4xl">{piece.title}</h2>
-          <p className="mt-3 font-body text-muted italic">“{piece.excerpt}”</p>
+          <p className="mt-3 font-body text-muted italic">{piece.excerpt}</p>
+          {piece.credit && (
+            <p className="mt-2 font-sans text-xs tracking-widest uppercase text-muted">
+              {piece.credit}
+            </p>
+          )}
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
-            <Link
-              to={piece.slug}
+            <a
+              href={piece.url}
+              target="_blank"
+              rel="noreferrer"
               className="border border-ink bg-paper px-3 py-1.5 font-sans text-xs font-bold tracking-widest uppercase text-ink shadow-sm transition-all hover:-rotate-1 hover:border-accent hover:bg-accent hover:text-paper"
             >
-              open the manuscript →
-            </Link>
+              read the original ↗
+            </a>
             <Pager onPrev={prev} onNext={next} label={`${i + 1} / ${n}`} />
           </div>
         </article>
@@ -169,10 +198,10 @@ export function Writing() {
         <HandNote className={`absolute ${L.note}`}>{L.noteText}</HandNote>
       </div>
 
-      {/* the whole pile, as tabbed scraps */}
+      {/* the active section's pile, as tabbed scraps */}
       <aside className={`hidden shrink-0 gap-3 lg:flex ${L.aside}`}>
         <HandNote className={L.asideNote}>the whole pile —</HandNote>
-        {pieces.map((p, idx) => (
+        {pile.map((p, idx) => (
           <button
             key={p.slug}
             type="button"

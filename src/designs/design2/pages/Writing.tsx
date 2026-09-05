@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { Link } from 'react-router'
-import { pieces } from '../../../content/writing'
+import { pieces, sections } from '../../../content/writing'
+import type { PieceSection } from '../../../content/writing'
 import { useTheme } from '../../../theme/ThemeContext'
 import { Pager } from '../components/Pager'
 
-// One full-screen poster card per piece; flip through them in place.
-// The active vibe decides the card's format; the piece index rotates its field.
+// One full-screen poster card per piece; flip through them in place. Every
+// card links out to the original publication. The active vibe decides the
+// card's format; the piece index rotates its field.
 const fields = [
   { bg: 'bg-accent', tone: 'paper' as const },
   { bg: 'bg-surface', tone: 'ink' as const },
@@ -15,8 +16,10 @@ const fields = [
 
 export function Writing() {
   const { vibe } = useTheme()
+  const [section, setSection] = useState<PieceSection>('creative')
   const [index, setIndex] = useState(0)
-  const piece = pieces[index]
+  const deck = pieces.filter((p) => p.section === section)
+  const piece = deck[index]
   const field = fields[index % fields.length]
   const num = String(index + 1).padStart(2, '0')
   const fg = field.tone === 'paper' ? 'text-paper' : 'text-ink'
@@ -27,14 +30,37 @@ export function Writing() {
       ? 'hover:bg-paper hover:text-accent'
       : 'hover:bg-ink hover:text-paper'
 
+  const pickSection = (next: PieceSection) => {
+    setSection(next)
+    setIndex(0)
+  }
+
   const pager = (
-    <Pager
-      index={index}
-      total={pieces.length}
-      onPrev={() => setIndex((i) => Math.max(0, i - 1))}
-      onNext={() => setIndex((i) => Math.min(pieces.length - 1, i + 1))}
-      tone={field.tone}
-    />
+    <div className="flex flex-col items-center gap-3">
+      <div className="flex items-center gap-4">
+        {sections.map(({ key, label }) => (
+          <button
+            key={key}
+            type="button"
+            onClick={() => pickSection(key)}
+            className={`border-b-2 pb-0.5 font-sans text-xs tracking-widest uppercase transition-colors ${
+              key === section
+                ? `${border} ${fg}`
+                : `border-transparent ${fg} opacity-50 hover:opacity-80`
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <Pager
+        index={index}
+        total={deck.length}
+        onPrev={() => setIndex((i) => Math.max(0, i - 1))}
+        onNext={() => setIndex((i) => Math.min(deck.length - 1, i + 1))}
+        tone={field.tone}
+      />
+    </div>
   )
   const kindChip = (
     <span
@@ -44,12 +70,24 @@ export function Writing() {
     </span>
   )
   const readLink = (extra = '') => (
-    <Link
-      to={`/design2/writing/${piece.slug}`}
+    <a
+      href={piece.url}
+      target="_blank"
+      rel="noreferrer"
       className={`inline-block border-2 ${border} px-6 py-3 font-display text-xl tracking-tight uppercase transition-colors ${fg} ${hover} ${extra}`}
     >
-      Read it →
-    </Link>
+      Read it ↗
+    </a>
+  )
+  const excerptBlock = (cls: string) => (
+    <div className={cls}>
+      <p>{piece.excerpt}</p>
+      {piece.credit && (
+        <p className="mt-3 font-sans text-xs not-italic tracking-widest uppercase opacity-80">
+          {piece.credit}
+        </p>
+      )}
+    </div>
   )
 
   let card
@@ -70,7 +108,9 @@ export function Writing() {
                 {num}
               </span>
               {kindChip}
-              <span className="font-sans text-xs tracking-widest">{piece.year}</span>
+              <span className="font-sans text-xs tracking-widest">
+                {piece.venue} · {piece.year}
+              </span>
             </div>
             <div>
               <h2
@@ -78,9 +118,7 @@ export function Writing() {
               >
                 {piece.title}
               </h2>
-              <p className={`mx-auto mt-6 max-w-xl font-body text-lg italic ${fgSoft}`}>
-                {piece.excerpt}
-              </p>
+              {excerptBlock(`mx-auto mt-6 max-w-xl font-body text-lg italic ${fgSoft}`)}
               {readLink('mt-8')}
             </div>
             {pager}
@@ -103,7 +141,7 @@ export function Writing() {
             <div className="flex flex-col items-start gap-3">
               {kindChip}
               <span className={`font-sans text-xs tracking-widest ${fgSoft}`}>
-                {piece.year}
+                {piece.venue} · {piece.year}
               </span>
             </div>
           </div>
@@ -113,9 +151,7 @@ export function Writing() {
             >
               {piece.title}
             </h2>
-            <p className={`max-w-xl font-body text-lg italic ${fgSoft}`}>
-              {piece.excerpt}
-            </p>
+            {excerptBlock(`max-w-xl font-body text-lg italic ${fgSoft}`)}
             <div className="flex flex-wrap items-center justify-between gap-4">
               {readLink()}
               {pager}
@@ -148,11 +184,9 @@ export function Writing() {
             >
               {piece.title}
             </h2>
-            <p
-              className={`max-w-xl rounded-3xl bg-paper/10 px-8 py-4 font-body text-lg italic ${fgSoft}`}
-            >
-              {piece.excerpt}
-            </p>
+            {excerptBlock(
+              `max-w-xl rounded-3xl bg-paper/10 px-8 py-4 font-body text-lg italic ${fgSoft}`,
+            )}
             {readLink('rounded-full')}
             {pager}
           </div>
@@ -175,7 +209,9 @@ export function Writing() {
                 {num}
               </span>
               <span className="inline-block -rotate-2">{kindChip}</span>
-              <span className="font-sans text-xs tracking-widest">{piece.year}</span>
+              <span className="font-sans text-xs tracking-widest">
+                {piece.venue} · {piece.year}
+              </span>
             </div>
             <div>
               <h2
@@ -183,11 +219,9 @@ export function Writing() {
               >
                 {piece.title}
               </h2>
-              <p
-                className={`mt-6 max-w-md rotate-1 font-body text-lg italic md:ml-40 ${fgSoft}`}
-              >
-                {piece.excerpt}
-              </p>
+              {excerptBlock(
+                `mt-6 max-w-md rotate-1 font-body text-lg italic md:ml-40 ${fgSoft}`,
+              )}
               {readLink('mt-8 -rotate-1 md:ml-16')}
             </div>
             {pager}
@@ -208,7 +242,9 @@ export function Writing() {
           <div className="relative z-10 flex h-full flex-col justify-between p-6 md:p-10">
             <div className={`flex items-baseline gap-4 ${fgSoft}`}>
               {kindChip}
-              <span className="font-sans text-xs tracking-widest">{piece.year}</span>
+              <span className="font-sans text-xs tracking-widest">
+                {piece.venue} · {piece.year}
+              </span>
             </div>
             <h2
               className={`flex min-h-0 flex-col py-2 font-display leading-none font-bold tracking-tighter uppercase ${fg}`}
@@ -241,9 +277,7 @@ export function Writing() {
             >
               {piece.title}
             </h2>
-            <p className={`max-w-xl font-body text-lg italic ${fgSoft}`}>
-              {piece.excerpt}
-            </p>
+            {excerptBlock(`max-w-xl font-body text-lg italic ${fgSoft}`)}
             {readLink()}
             {pager}
           </div>

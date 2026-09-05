@@ -1,4 +1,3 @@
-import { Link } from 'react-router'
 import type { ReactElement, ReactNode } from 'react'
 import { site } from '../../../content/site'
 import { images } from '../../../content/images'
@@ -42,12 +41,15 @@ function FeaturedLink() {
   return (
     <div>
       <Stamp className="border-accent text-accent">{featured.kind}</Stamp>
-      <Link
-        to={`writing/${featured.slug}`}
+      <a
+        href={featured.url}
+        target="_blank"
+        rel="noreferrer"
         className="mt-2 block font-display text-lg leading-snug text-ink underline-offset-4 hover:underline"
       >
         {featured.title}
-      </Link>
+      </a>
+      <HandNote className="block pt-1">in {featured.venue} ↗</HandNote>
     </div>
   )
 }

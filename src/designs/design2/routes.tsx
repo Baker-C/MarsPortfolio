@@ -7,7 +7,7 @@ import { PosterNav } from './components/PosterNav'
 import { MarqueeStrip } from './components/MarqueeStrip'
 import { Home } from './pages/Home'
 import { Writing } from './pages/Writing'
-import { ReaderPage } from './pages/ReaderPage'
+import { Editing } from './pages/Editing'
 import { Gallery } from './pages/Gallery'
 import { About } from './pages/About'
 import { Contact } from './pages/Contact'
@@ -29,7 +29,7 @@ function Layout() {
         <main className="min-h-0 flex-1 overflow-hidden">
           <Outlet />
         </main>
-        <MarqueeStrip text={`${site.name} — essays · poems · fictions`} />
+        <MarqueeStrip text={`${site.name} — stories · poems · essays · advocacy`} />
       </div>
     </ThemeScope>
   )
@@ -41,7 +41,7 @@ export const design2Routes: RouteObject = {
   children: [
     { index: true, element: <Home /> },
     { path: 'writing', element: <Writing /> },
-    { path: 'writing/:slug', element: <ReaderPage /> },
+    { path: 'editing', element: <Editing /> },
     { path: 'gallery', element: <Gallery /> },
     { path: 'about', element: <About /> },
     { path: 'contact', element: <Contact /> },

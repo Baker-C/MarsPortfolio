@@ -17,7 +17,7 @@ function FolioOrnament() {
 function folio(rel: string): { no: string; label: string } {
   if (rel === '') return { no: '01', label: 'Frontispiece' }
   if (rel === 'writing') return { no: '02', label: 'Contents' }
-  if (rel.startsWith('writing/')) return { no: '03', label: 'The Reading' }
+  if (rel === 'editing') return { no: '03', label: 'The Desk' }
   if (rel === 'gallery') return { no: '04', label: 'The Plates' }
   if (rel === 'about') return { no: '05', label: 'The Author' }
   if (rel === 'contact') return { no: '06', label: 'Correspondence' }
