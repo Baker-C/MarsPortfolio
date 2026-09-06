@@ -392,15 +392,24 @@ export function AdvocacyFeature({
 }
 
 /**
- * The Editing chapter: a thin typed note — header on the left, the note and
- * client project on the right — with the artwork below.
+ * The Editing chapter: the artwork on top, then a thin typed note — header on
+ * the left, the note and client project on the right.
  */
 export function EditingFeature({ to, number }: { to: string; number: string }) {
   const artwork = images.gallery[5]
   const { heading, blurb, paragraphs, project } = site.editing
   return (
     <Link to={to} className="group block border-t border-edge">
-      <div className="bg-paper px-8 py-8 md:grid md:grid-cols-2 md:gap-12 md:px-14 md:py-10">
+      {/* the artwork above the note, whole and matted in white like a print */}
+      <div className="bg-white p-5 md:p-8">
+        <img
+          src={photoSrc(artwork)}
+          alt={photoAlt(artwork)}
+          className="mx-auto h-[48vh] object-contain md:h-[56vh]"
+        />
+      </div>
+
+      <div className="border-t border-edge bg-paper px-8 py-8 md:grid md:grid-cols-2 md:gap-12 md:px-14 md:py-10">
         <div>
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
             Chapter {number} · freelance
@@ -434,15 +443,6 @@ export function EditingFeature({ to, number }: { to: string; number: string }) {
           </div>
         </div>
       </div>
-
-      {/* the artwork below the note */}
-      <div className="relative h-[52vh] overflow-hidden border-t border-edge md:h-[58vh]">
-        <img
-          src={photoSrc(artwork)}
-          alt={photoAlt(artwork)}
-          className="h-full w-full object-cover"
-        />
-      </div>
     </Link>
   )
 }
@@ -472,7 +472,7 @@ export function DarkFooter() {
   }
 
   return (
-    <footer className="relative overflow-hidden bg-ink">
+    <footer className="relative overflow-hidden bg-black">
       <img
         src={photoSrc(artwork)}
         alt={photoAlt(artwork)}
@@ -480,7 +480,7 @@ export function DarkFooter() {
       />
       <div
         aria-hidden
-        className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-ink/0 to-ink"
+        className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-black/0 to-black"
       />
       <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-3 pb-10">
         <button
