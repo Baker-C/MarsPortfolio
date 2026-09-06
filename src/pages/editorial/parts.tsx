@@ -1,4 +1,3 @@
-import { Link } from 'react-router'
 import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { site } from '../../content/site'
@@ -17,6 +16,51 @@ import { ThemeSwitcher } from '../../theme/ThemeSwitcher'
 const photoSrc = (slot: ImageSlot) => (slot.kind === 'photo' ? slot.src : undefined)
 const photoAlt = (slot: ImageSlot) => slot.alt
 
+const ALT_NAME = 'Good Willed Woman'
+
+/**
+ * The site mark: clicking scrolls home and crossfades the name into its
+ * meaning; hovering the meaning explains it (after Portfolio_v2's Name).
+ */
+function NameToggle() {
+  const [isAlt, setIsAlt] = useState(false)
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        setIsAlt((v) => !v)
+      }}
+      aria-pressed={isAlt}
+      aria-label="Toggle name text"
+      className="group relative cursor-pointer text-ink transition-colors hover:text-accent-2"
+    >
+      <span className="relative inline-flex justify-center">
+        <span aria-hidden className="whitespace-pre opacity-0 select-none">
+          {ALT_NAME}
+        </span>
+        <span
+          className={`absolute inset-0 flex justify-center whitespace-pre transition-opacity duration-300 ${isAlt ? 'opacity-0' : 'opacity-100'}`}
+        >
+          {site.name}
+        </span>
+        <span
+          aria-hidden={!isAlt}
+          className={`absolute inset-0 flex justify-center whitespace-pre transition-opacity duration-300 ${isAlt ? 'opacity-100' : 'opacity-0'}`}
+        >
+          {ALT_NAME}
+        </span>
+      </span>
+      <span
+        role="tooltip"
+        className={`pointer-events-none absolute inset-x-0 top-full mt-3 border border-paper/60 bg-ink/90 px-3 py-1.5 text-center font-sans text-[9px] normal-case tracking-widest text-paper opacity-0 transition-opacity duration-150 ${isAlt ? 'group-hover:opacity-100' : ''}`}
+      >
+        The meaning of my name, Marlee
+      </span>
+    </button>
+  )
+}
+
 /** Theme scope + switcher + the quiet site mark, shared by every route. */
 export function PageShell({ children }: { children: ReactNode }) {
   return (
@@ -24,20 +68,8 @@ export function PageShell({ children }: { children: ReactNode }) {
       <div className="fixed top-3 right-3 z-50">
         <ThemeSwitcher />
       </div>
-      <nav className="fixed top-3 left-4 z-50 flex items-center gap-3 border border-edge bg-paper/85 px-3 py-1.5 font-sans text-[9px] tracking-widest uppercase backdrop-blur">
-        <Link to="/" className="text-ink transition-colors hover:text-accent-2">
-          {site.name}
-        </Link>
-        <span aria-hidden className="h-2.5 border-l border-edge" />
-        <a href="#creative" className="text-muted transition-colors hover:text-accent-2">
-          Creative
-        </a>
-        <a href="#advocacy" className="text-muted transition-colors hover:text-accent-2">
-          Advocacy
-        </a>
-        <a href="#editing" className="text-muted transition-colors hover:text-accent-2">
-          Editing
-        </a>
+      <nav className="fixed top-3 left-4 z-50 flex items-center border border-edge bg-paper/85 px-3 py-1.5 font-sans text-[9px] tracking-widest uppercase backdrop-blur">
+        <NameToggle />
       </nav>
       {children}
     </ThemeScope>
@@ -78,7 +110,7 @@ export function Hero() {
         />
       </div>
 
-      <p className="absolute top-7 left-1/2 -translate-x-1/2 bg-paper/80 px-5 py-1.5 text-center font-sans text-sm tracking-[0.4em] whitespace-nowrap uppercase text-ink backdrop-blur-sm">
+      <p className="absolute top-7 left-1/2 -translate-x-1/2 bg-ink/85 px-6 py-2 text-center font-sans text-lg tracking-[0.4em] whitespace-nowrap uppercase text-paper backdrop-blur-sm">
         {site.name}
       </p>
       <div className="absolute inset-x-0 bottom-7 flex flex-col items-center gap-2 px-6 text-ink">
