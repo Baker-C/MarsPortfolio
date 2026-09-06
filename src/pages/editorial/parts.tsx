@@ -300,36 +300,6 @@ export function EditingFeature({ number }: { number: string }) {
   const { heading, blurb, paragraphs, project, poem } = site.editing
   return (
     <section id="editing" className="block border-t border-edge">
-      {/* the artwork above the note, whole and matted in white like a print,
-          with a stanza gated on each side of the ring */}
-      <div className="relative bg-white p-5 md:p-8">
-        <img
-          src={photoSrc(artwork)}
-          alt={photoAlt(artwork)}
-          className="w-full"
-        />
-        {/* each half floats an ellipse matching the ring, so the verse wraps
-            the curve like the reference posters */}
-        <div className="absolute inset-y-[4%] left-[6%] right-1/2 hidden overflow-hidden md:block">
-          <div
-            aria-hidden
-            className="float-right h-full w-[66%] [shape-outside:ellipse(107%_48%_at_100%_50%)]"
-          />
-          <p className="text-justify font-body text-[15px] italic leading-loose text-white/90">
-            {poem.left.join(' ')}
-          </p>
-        </div>
-        <div className="absolute inset-y-[4%] left-1/2 right-[6%] hidden overflow-hidden md:block">
-          <div
-            aria-hidden
-            className="float-left h-full w-[66%] [shape-outside:ellipse(107%_48%_at_0%_50%)]"
-          />
-          <p className="text-justify font-body text-[15px] italic leading-loose text-white/90">
-            {poem.right.join(' ')}
-          </p>
-        </div>
-      </div>
-
       <div className="bg-ink px-8 py-8 md:grid md:grid-cols-2 md:gap-12 md:px-14 md:py-10">
         <div>
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-paper/60">
@@ -361,16 +331,45 @@ export function EditingFeature({ number }: { number: string }) {
           </div>
         </div>
       </div>
+
+      {/* the artwork below the note, whole and matted in white like a print,
+          with a stanza gated on each side of the ring */}
+      <div className="relative bg-white p-5 md:p-8">
+        <img
+          src={photoSrc(artwork)}
+          alt={photoAlt(artwork)}
+          className="w-full"
+        />
+        {/* each half floats an ellipse matching the ring, so the verse wraps
+            the curve like the reference posters */}
+        <div className="absolute inset-y-[4%] left-[6%] right-1/2 hidden overflow-hidden md:block">
+          <div
+            aria-hidden
+            className="float-right h-full w-[66%] [shape-outside:ellipse(107%_48%_at_100%_50%)]"
+          />
+          <p className="text-justify font-body text-[15px] italic leading-loose text-white/90">
+            {poem.left.join(' ')}
+          </p>
+        </div>
+        <div className="absolute inset-y-[4%] left-1/2 right-[6%] hidden overflow-hidden md:block">
+          <div
+            aria-hidden
+            className="float-left h-full w-[66%] [shape-outside:ellipse(107%_48%_at_0%_50%)]"
+          />
+          <p className="text-justify font-body text-[15px] italic leading-loose text-white/90">
+            {poem.right.join(' ')}
+          </p>
+        </div>
+      </div>
     </section>
   )
 }
 
 /**
- * Footer: the THE NEW collage top-aligned, its bottom half fading into the
- * dark ground, with the email as a click-to-copy title over the fade.
+ * Footer: the page fades from paper down to ink, with the email as a
+ * click-to-copy title resting on the dark end.
  */
 export function DarkFooter() {
-  const artwork = images.gallery[1]
   const email = site.contact.email
   const [copied, setCopied] = useState(false)
 
@@ -390,17 +389,8 @@ export function DarkFooter() {
   }
 
   return (
-    <footer className="relative overflow-hidden bg-black">
-      <img
-        src={photoSrc(artwork)}
-        alt={photoAlt(artwork)}
-        className="h-[60vh] w-full object-cover object-top md:h-[70vh]"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-black/0 to-black"
-      />
-      <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-3 pb-10">
+    <footer className="bg-gradient-to-b from-white to-ink">
+      <div className="flex flex-col items-center gap-3 pt-44 pb-10 md:pt-52">
         <button
           type="button"
           onClick={copyEmail}
