@@ -1,6 +1,7 @@
 // Site-wide copy and metadata. Pages import from here and pass down as props;
-// components never import this file. Contact details stay placeholder until
-// Marlee confirms what she wants public — see battles/content-plan.md.
+// components never import this file. All copy speaks in Marlee's first-person
+// voice (Marlee uses they/them). Contact details stay placeholder until
+// Marlee confirms what they want public — see battles/content-plan.md.
 
 export type NavItem = { label: string; path: string }
 
@@ -19,17 +20,17 @@ export const site = {
   about: {
     heading: 'About Marlee',
     paragraphs: [
-      'Marlee Baker is a writer and editor. Her fiction, poetry, and essays have appeared in Homeplace Magazine, Floweret Poppy Wilt, and The Wineskin — work that moves between speculative fiction, prose poetry, and lyric essay.',
-      'As Education and Outreach Specialist for the Portland Metro and Salem regions at the Fair Housing Council of Oregon, she wrote and produced education and advocacy pieces on fair housing — from protected-class policy to Oregon’s housing history.',
+      'I’m a writer and editor. My fiction, poetry, and essays have appeared in Homeplace Magazine, Floweret Poppy Wilt, and The Wineskin — work that moves between speculative fiction, prose poetry, and lyric essay.',
+      'As Education and Outreach Specialist for the Portland Metro and Salem regions at the Fair Housing Council of Oregon, I wrote and produced education and advocacy pieces on fair housing — from protected-class policy to Oregon’s housing history.',
       'A fuller bio is on its way — until then, the writing speaks for itself.',
     ],
   },
   editing: {
     heading: 'Editing',
-    blurb: 'Freelance editing, alongside the writing.',
+    blurb: 'Freelance editing, alongside my writing.',
     paragraphs: [
-      'Marlee takes on freelance editing work alongside her own writing.',
-      'Rates, availability, and scope by conversation — reach out through the contact page.',
+      'I take on freelance editing work alongside my own writing.',
+      'Rates, availability, and scope by conversation — reach out and we’ll talk.',
     ],
     project: {
       label: 'Native American Flight Attendant',
@@ -40,7 +41,7 @@ export const site = {
   contact: {
     heading: 'Get in touch',
     blurb:
-      'For commissions, reprints, readings, or just to say a word — the inbox is open.',
+      'For commissions, reprints, readings, or just to say a word — my inbox is open.',
     email: 'hello@marlee.example',
     links: [
       { label: 'Instagram', href: 'https://instagram.com/example' },

@@ -263,9 +263,9 @@ export function AdvocacyFeature({
             {label}
           </h2>
           <p className="mt-4 max-w-md text-justify font-body text-[12.5px] leading-relaxed text-ink">
-            Education and advocacy writing on fair housing — from protected-class
-            policy to Oregon’s housing history, written and produced at the Fair
-            Housing Council of Oregon.
+            My education and advocacy writing on fair housing — from
+            protected-class policy to Oregon’s housing history, written and
+            produced during my time at the Fair Housing Council of Oregon.
           </p>
           <ol className="mt-5 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-3">
             {pieces.map((piece, idx) => (

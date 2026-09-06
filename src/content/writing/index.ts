@@ -24,7 +24,7 @@ export const sections: { key: PieceSection; label: string }[] = [
 ]
 
 const FHCO_CREDIT =
-  'Produced during Marlee’s tenure at the Fair Housing Council of Oregon'
+  'Produced during my tenure at the Fair Housing Council of Oregon'
 
 export const pieces: Piece[] = [
   {
