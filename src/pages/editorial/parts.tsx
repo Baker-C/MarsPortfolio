@@ -111,6 +111,12 @@ export function Hero() {
         />
       </div>
 
+      <h1 className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 text-center font-display font-bold tracking-[0.15em] uppercase text-paper drop-shadow-lg">
+        <span className="text-5xl md:text-7xl">Creative Writer</span>
+        <span className="text-3xl md:text-5xl">&amp;</span>
+        <span className="text-5xl md:text-7xl">Editor</span>
+      </h1>
+
       <div className="absolute inset-x-0 bottom-7 flex flex-col items-center gap-2 px-6 text-ink">
         <p className="max-w-md bg-ink/85 px-4 py-1.5 text-center font-body text-sm italic text-paper backdrop-blur-sm">
           {site.tagline}
