@@ -16,7 +16,7 @@ import { ThemeSwitcher } from '../../theme/ThemeSwitcher'
 const photoSrc = (slot: ImageSlot) => (slot.kind === 'photo' ? slot.src : undefined)
 const photoAlt = (slot: ImageSlot) => slot.alt
 
-/** Theme scope + switcher + tiny variant nav, shared by every editorial route. */
+/** Theme scope + switcher + the quiet site mark, shared by every route. */
 export function PageShell({ children }: { children: ReactNode }) {
   return (
     <ThemeScope designKey="editorial" initialTheme="lilypond">
@@ -24,15 +24,18 @@ export function PageShell({ children }: { children: ReactNode }) {
         <ThemeSwitcher />
       </div>
       <nav className="fixed top-3 left-4 z-50 flex items-center gap-3 border border-edge bg-paper/85 px-3 py-1.5 font-sans text-[9px] tracking-widest uppercase backdrop-blur">
-        <Link to="/" className="text-muted transition-colors hover:text-accent-2">
-          Mocks
+        <Link to="/" className="text-ink transition-colors hover:text-accent-2">
+          {site.name}
         </Link>
         <span aria-hidden className="h-2.5 border-l border-edge" />
-        <Link to="/a" className="text-ink transition-colors hover:text-accent-2">
-          Scroll
+        <Link to="/creative" className="text-muted transition-colors hover:text-accent-2">
+          Creative
         </Link>
-        <Link to="/b" className="text-ink transition-colors hover:text-accent-2">
-          Cards
+        <Link to="/advocacy" className="text-muted transition-colors hover:text-accent-2">
+          Advocacy
+        </Link>
+        <Link to="/editing" className="text-muted transition-colors hover:text-accent-2">
+          Editing
         </Link>
       </nav>
       {children}
@@ -239,7 +242,8 @@ export function DarkFooter() {
 
 /**
  * A chapter as its own full-viewport section: photo half, cover-page half.
- * The whole section links into the chapter's scroll page.
+ * With `to` it links into the chapter's page; without, it is the chapter
+ * page's own static cover (scroll cue instead of an enter link).
  */
 export function ChapterSection({
   to,
@@ -249,18 +253,15 @@ export function ChapterSection({
   slot,
   flip = false,
 }: {
-  to: string
+  to?: string
   number: string
   label: string
   note: string
   slot: ImageSlot
   flip?: boolean
 }) {
-  return (
-    <Link
-      to={to}
-      className="group block w-full border-t border-edge bg-paper md:grid md:min-h-dvh md:grid-cols-2"
-    >
+  const inner = (
+    <>
       <div className={`h-72 md:h-auto ${flip ? 'md:order-2' : ''}`}>
         <ArtPlaceholder slot={slot} />
       </div>
@@ -276,9 +277,17 @@ export function ChapterSection({
           aria-hidden
           className="mt-3 border-b border-edge pb-1 font-sans text-[10px] tracking-[0.25em] uppercase text-muted transition-colors group-hover:border-accent-2 group-hover:text-accent-2"
         >
-          Enter →
+          {to ? 'Enter →' : '↓'}
         </span>
       </div>
+    </>
+  )
+  const cls = 'group block w-full border-t border-edge bg-paper md:grid md:min-h-dvh md:grid-cols-2'
+  return to ? (
+    <Link to={to} className={cls}>
+      {inner}
     </Link>
+  ) : (
+    <header className={cls}>{inner}</header>
   )
 }

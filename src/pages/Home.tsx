@@ -3,18 +3,18 @@ import { images } from '../content/images'
 import { site } from '../content/site'
 import { AboutSpread, ChapterSection, DarkFooter, Hero, PageShell } from './editorial/parts'
 
-/** Variant B — hero and about, then each chapter as its own full-viewport
- *  section in the scroll; entering one opens its own scrolling page. */
-export function VariantB() {
+/** Home — the chapter scroll: hero collage, about spread, then each chapter
+ *  as its own full-viewport section linking into its page. */
+export function Home() {
   const chapters = [
     ...sections.map(({ key, label }) => ({
-      to: `/b/${key === 'professional' ? 'advocacy' : key}`,
+      to: `/${key === 'professional' ? 'advocacy' : key}`,
       label,
       note: `${String(pieces.filter((p) => p.section === key).length).padStart(2, '0')} pieces`,
       slot: images.gallery[key === 'professional' ? 6 : 0],
     })),
     {
-      to: '/b/editing',
+      to: '/editing',
       label: site.editing.heading,
       note: 'freelance',
       slot: images.gallery[1],

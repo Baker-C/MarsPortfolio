@@ -5,10 +5,12 @@ rationale lives in `battles/css-architecture.md` and `battles/theme-concept.md`.
 
 ## Structure
 
-- Clean slate: `/` renders the single design-free base page
-  (`src/pages/Base.tsx`) while the next design direction is decided. The three
-  earlier design versions (Field Journal / Poster / Collage) were removed and
-  live in git history (`feature/real-content` and before).
+- Direction: the nature-editorial chapter scroll (chosen 2026-09-06 from
+  `reference-theme-photos/FeatureDesign/`). `/` scrolls hero collage → about
+  spread → one full-viewport section per chapter; `/creative`, `/advocacy`,
+  `/editing` are chapter pages of full-bleed zine spreads. Shared spread
+  fragments live in `src/pages/editorial/parts.tsx`. The three earlier design
+  versions live in git history (`feature/real-content` and before).
 - Layers, one-way: pages → components → tokens, content feeds pages as data.
   - `src/index.css` — ALL visual constants (Tailwind 4 `@theme` tokens + six
     `[data-theme]` palettes). The only CSS file.

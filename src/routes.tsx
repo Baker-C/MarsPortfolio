@@ -1,13 +1,25 @@
-import { createBrowserRouter } from 'react-router'
-import { Chooser } from './pages/Chooser'
-import { VariantA } from './pages/VariantA'
-import { VariantB } from './pages/VariantB'
+import { createBrowserRouter, Outlet, ScrollRestoration } from 'react-router'
+import { Home } from './pages/Home'
 import { SectionWorks } from './pages/SectionWorks'
 
-// Nature-editorial scroll mocks: /a one continuous scroll, /b chapter cards.
+// Root layout mounts scroll restoration once so navigation lands at the top.
+function Root() {
+  return (
+    <>
+      <ScrollRestoration />
+      <Outlet />
+    </>
+  )
+}
+
+// The chapter-scroll direction: / is the scroll home; each chapter has its
+// own page of full-bleed spreads.
 export const router = createBrowserRouter([
-  { path: '/', element: <Chooser /> },
-  { path: '/a', element: <VariantA /> },
-  { path: '/b', element: <VariantB /> },
-  { path: '/b/:sectionSlug', element: <SectionWorks /> },
+  {
+    element: <Root />,
+    children: [
+      { path: '/', element: <Home /> },
+      { path: '/:sectionSlug', element: <SectionWorks /> },
+    ],
+  },
 ])
