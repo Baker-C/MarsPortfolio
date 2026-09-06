@@ -44,61 +44,53 @@ export function PageShell({ children }: { children: ReactNode }) {
 }
 
 /**
- * Hero collage after the sky-cross reference: an upturned reflection above,
- * a grass field below, and two offset windows cut through the seam.
+ * Hero after the seam-cut reference, built from Marlee's own collages: the
+ * eye collage above, Mitakuye below, and a window cut through the seam.
  */
 export function Hero() {
-  const reflection = images.gallery[0]
-  const grass = images.gallery[2]
-  const windowSky = images.gallery[5]
-  const windowTrees = images.hero
+  const above = images.hero
+  const below = images.gallery[2]
+  const seamWindow = images.gallery[5]
   return (
     <section className="relative h-dvh overflow-hidden bg-surface">
       <div className="absolute inset-x-0 top-0 h-1/2 overflow-hidden">
         <img
-          src={photoSrc(reflection)}
-          alt={photoAlt(reflection)}
-          className="h-full w-full rotate-180 object-cover"
-        />
-      </div>
-      <div className="absolute inset-x-0 bottom-0 h-1/2 overflow-hidden">
-        <img
-          src={photoSrc(grass)}
-          alt={photoAlt(grass)}
-          className="h-full w-full object-cover object-left-bottom"
-        />
-      </div>
-
-      {/* windows cut through the seam */}
-      <div className="absolute top-[23%] left-1/2 h-[27%] w-44 -translate-x-[72%] overflow-hidden sm:w-56 md:w-64">
-        <img
-          src={photoSrc(windowSky)}
-          alt={photoAlt(windowSky)}
+          src={photoSrc(above)}
+          alt={photoAlt(above)}
           className="h-full w-full object-cover object-top"
         />
       </div>
-      <div className="absolute top-1/2 left-1/2 h-[26%] w-40 -translate-x-[18%] overflow-hidden sm:w-48 md:w-56">
+      <div className="absolute inset-x-0 bottom-0 h-1/2 overflow-hidden border-t border-edge">
         <img
-          src={photoSrc(windowTrees)}
-          alt={photoAlt(windowTrees)}
+          src={photoSrc(below)}
+          alt={photoAlt(below)}
           className="h-full w-full object-cover"
         />
       </div>
 
-      <p className="absolute inset-x-0 top-7 text-center font-sans text-sm tracking-[0.4em] uppercase text-paper drop-shadow-lg">
+      {/* a window cut through the seam */}
+      <div className="absolute top-[30%] left-1/2 h-[40%] w-44 -translate-x-[80%] overflow-hidden shadow-2xl sm:w-56 md:w-64">
+        <img
+          src={photoSrc(seamWindow)}
+          alt={photoAlt(seamWindow)}
+          className="h-full w-full object-cover"
+        />
+      </div>
+
+      <p className="absolute top-7 left-1/2 -translate-x-1/2 bg-paper/80 px-5 py-1.5 text-center font-sans text-sm tracking-[0.4em] whitespace-nowrap uppercase text-ink backdrop-blur-sm">
         {site.name}
       </p>
-      <div className="absolute inset-x-0 bottom-7 flex flex-col items-center gap-2 px-6 text-paper drop-shadow-md">
-        <p className="max-w-md text-center font-body text-sm italic">{site.tagline}</p>
+      <div className="absolute inset-x-0 bottom-7 flex flex-col items-center gap-2 px-6 text-ink">
+        <p className="max-w-md bg-paper/80 px-4 py-1 text-center font-body text-sm italic backdrop-blur-sm">
+          {site.tagline}
+        </p>
         <span aria-hidden className="font-sans text-sm">
           ↓
         </span>
       </div>
-      {windowTrees.kind === 'photo' && (
-        <p className="absolute bottom-2 left-3 font-sans text-[8px] tracking-widest uppercase text-paper/70">
-          Photos: Dietmar Rabich, W.carter · CC BY-SA 4.0 / PD
-        </p>
-      )}
+      <p className="absolute bottom-2 left-3 font-sans text-[8px] tracking-widest uppercase text-ink/60">
+        Collage art · Marlee Baker
+      </p>
     </section>
   )
 }
@@ -262,12 +254,12 @@ export function CreativeFeature({
 
       {/* the page laid over it */}
       <div className="absolute inset-x-[8%] inset-y-[16%] flex flex-col border border-paper/60 shadow-2xl md:grid md:grid-cols-2">
-        {/* cut window — the field shows through, framed twice like a plate */}
-        <div className="relative min-h-40 flex-1 md:min-h-0">
-          <div aria-hidden className="absolute inset-3 border border-paper/70" />
+        {/* cut window — the scene shows through, framed twice like a plate */}
+        <div className="relative min-h-40 flex-1 border border-accent-2 md:min-h-0">
+          <div aria-hidden className="absolute inset-3 border border-accent" />
         </div>
         {/* the text leaf */}
-        <div className="flex flex-col items-center justify-center gap-4 bg-paper/90 px-8 py-10 text-center backdrop-blur-[2px] md:px-12">
+        <div className="flex flex-col items-center justify-center gap-4 bg-paper/95 px-8 py-10 text-center backdrop-blur-sm md:px-12">
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
             Chapter {number}
           </p>
@@ -300,11 +292,11 @@ export function CreativeFeature({
         src={src}
         alt=""
         aria-hidden
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover [mask-image:radial-gradient(ellipse_26%_34%_at_50%_16%,black_42%,transparent_75%)]"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover [mask-image:radial-gradient(ellipse_22%_28%_at_29%_22%,black_55%,transparent_82%),radial-gradient(ellipse_25%_32%_at_44%_50%,black_50%,transparent_78%),radial-gradient(ellipse_20%_26%_at_23%_76%,black_55%,transparent_82%)]"
       />
 
       <p className="absolute right-[9%] bottom-[10%] font-sans text-[9px] font-bold tracking-[0.3em] uppercase text-paper drop-shadow-md">
-        Reading the field
+        Reading the night
       </p>
     </Link>
   )
@@ -391,25 +383,17 @@ export function AdvocacyFeature({
  * handwritten scrap column and a hand-script sign-off.
  */
 export function EditingFeature({ to, number }: { to: string; number: string }) {
-  const hillside = images.gallery[1]
-  const strip = images.hero
+  const artwork = images.gallery[1]
   const { heading, blurb, paragraphs, project } = site.editing
   return (
     <Link to={to} className="group block border-t border-edge">
-      {/* the hillside with the pasted strip */}
+      {/* THE NEW — the artwork carries the top on its own */}
       <div className="relative h-[52vh] overflow-hidden md:h-[58vh]">
         <img
-          src={photoSrc(hillside)}
-          alt={photoAlt(hillside)}
+          src={photoSrc(artwork)}
+          alt={photoAlt(artwork)}
           className="h-full w-full object-cover"
         />
-        <div className="absolute top-[16%] left-1/2 w-[72%] max-w-xl -translate-x-1/2 -rotate-1 shadow-2xl md:w-[56%]">
-          <img
-            src={photoSrc(strip)}
-            alt={photoAlt(strip)}
-            className="h-32 w-full object-cover object-center grayscale md:h-40"
-          />
-        </div>
       </div>
 
       {/* the typed note + the handwritten scrap */}
