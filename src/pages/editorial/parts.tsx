@@ -310,6 +310,81 @@ export function CreativeFeature({
   )
 }
 
+/**
+ * The Advocacy chapter as a letter card: the same photograph runs full bleed
+ * and blurred behind, then sharp inside the cream card, letter text below.
+ */
+export function AdvocacyFeature({
+  to,
+  number,
+  label,
+  note,
+  titles,
+}: {
+  to: string
+  number: string
+  label: string
+  note: string
+  titles: string[]
+}) {
+  const scene = images.gallery[6]
+  const src = photoSrc(scene)
+  return (
+    <Link
+      to={to}
+      className="group relative block overflow-hidden border-t border-edge py-14 md:py-20"
+    >
+      {/* the same scene, blurred, as the ground */}
+      <img
+        src={src}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 h-full w-full scale-110 object-cover blur-lg"
+      />
+      <div aria-hidden className="absolute inset-0 bg-ink/35" />
+
+      {/* the letter card */}
+      <div className="relative mx-auto w-[88%] max-w-xl bg-paper p-5 shadow-2xl md:p-7">
+        <div className="aspect-[4/3] overflow-hidden">
+          <img src={src} alt={photoAlt(scene)} className="h-full w-full object-cover" />
+        </div>
+        <div className="px-2 pt-8 pb-4 md:px-4">
+          <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
+            Chapter {number} · {note}
+          </p>
+          <h2 className="mt-2 font-display text-2xl font-light tracking-[0.3em] uppercase text-ink transition-colors group-hover:text-accent-2">
+            {label}
+          </h2>
+          <p className="mt-4 max-w-md text-justify font-body text-[12.5px] leading-relaxed text-ink">
+            Education and advocacy writing on fair housing — from protected-class
+            policy to Oregon’s housing history, written and produced at the Fair
+            Housing Council of Oregon.
+          </p>
+          <ol className="mt-5 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2">
+            {titles.map((title, idx) => (
+              <li key={title} className="flex gap-2 font-body text-[11.5px] leading-snug text-ink/80">
+                <span className="shrink-0 pt-px font-sans text-[8.5px] tracking-widest text-muted">
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+                <span>{title}</span>
+              </li>
+            ))}
+          </ol>
+          <div className="mt-7 flex items-baseline justify-between">
+            <p className="font-body text-[12.5px] italic text-ink">From, Marlee</p>
+            <span
+              aria-hidden
+              className="border-b border-edge pb-0.5 font-sans text-[10px] tracking-[0.25em] uppercase text-muted transition-colors group-hover:border-accent-2 group-hover:text-accent-2"
+            >
+              Enter →
+            </span>
+          </div>
+        </div>
+      </div>
+    </Link>
+  )
+}
+
 /** Footer band on the dark ground. */
 export function DarkFooter() {
   return (

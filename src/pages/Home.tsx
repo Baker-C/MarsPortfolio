@@ -3,6 +3,7 @@ import { images } from '../content/images'
 import { site } from '../content/site'
 import {
   AboutSpread,
+  AdvocacyFeature,
   ChapterSection,
   CreativeFeature,
   DarkFooter,
@@ -39,17 +40,21 @@ export function Home() {
         note={chapters[0].note}
         titles={pieces.filter((p) => p.section === 'creative').map((p) => p.title)}
       />
-      {chapters.slice(1).map((chapter, idx) => (
-        <ChapterSection
-          key={chapter.to}
-          to={chapter.to}
-          number={String(idx + 2).padStart(2, '0')}
-          label={chapter.label}
-          note={chapter.note}
-          slot={chapter.slot}
-          flip={idx % 2 === 0}
-        />
-      ))}
+      <AdvocacyFeature
+        to="/advocacy"
+        number="02"
+        label={chapters[1].label}
+        note={chapters[1].note}
+        titles={pieces.filter((p) => p.section === 'professional').map((p) => p.title)}
+      />
+      <ChapterSection
+        to="/editing"
+        number="03"
+        label={chapters[2].label}
+        note={chapters[2].note}
+        slot={chapters[2].slot}
+        flip
+      />
       <DarkFooter />
     </PageShell>
   )
