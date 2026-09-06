@@ -111,7 +111,7 @@ export function Hero() {
         />
       </div>
 
-      <h1 className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 text-center font-display tracking-[0.15em] uppercase text-paper drop-shadow-lg">
+      <h1 className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 text-center font-display tracking-[0.15em] uppercase text-paper text-shadow-lg text-shadow-ink/80 drop-shadow-xl drop-shadow-ink/50">
         <span className="text-5xl md:text-7xl">Creative Writer</span>
         <span className="text-3xl md:text-5xl">&amp;</span>
         <span className="text-5xl md:text-7xl">Editor</span>
