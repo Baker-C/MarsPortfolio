@@ -112,9 +112,6 @@ export function AboutSpread() {
           About
           <span className="mt-2 block">Marlee</span>
         </h2>
-        <div className="mt-8 h-24 w-32 opacity-80">
-          <ArtPlaceholder slot={images.aboutPortrait} className="bg-paper" />
-        </div>
         <div className="mt-8 max-w-sm space-y-3 text-justify font-body text-[12.5px] leading-relaxed text-ink">
           {site.about.paragraphs.slice(0, 2).map((paragraph) => (
             <p key={paragraph.slice(0, 24)}>{paragraph}</p>

@@ -28,13 +28,6 @@ export const images = {
     alt: '',
   } satisfies ImageSlot as ImageSlot,
 
-  aboutPortrait: {
-    kind: 'art',
-    motif: 'moth',
-    tone: 'accent2',
-    alt: 'Line drawing of a moth resting on a leaf',
-  } satisfies ImageSlot as ImageSlot,
-
   gallery: [
     {
       kind: 'photo',
