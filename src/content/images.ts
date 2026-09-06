@@ -20,6 +20,14 @@ export const images = {
     caption: BY,
   } satisfies ImageSlot as ImageSlot,
 
+  /** The angel nightscape's subject (angel, gilded frame, star) with the sky
+   *  removed — overlays the full piece 1:1 so the subject pops over the page. */
+  creativeCutout: {
+    kind: 'photo',
+    src: '/art/Firefly_RemoveBackground.png',
+    alt: '',
+  } satisfies ImageSlot as ImageSlot,
+
   aboutPortrait: {
     kind: 'art',
     motif: 'moth',

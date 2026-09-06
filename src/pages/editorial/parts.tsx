@@ -243,23 +243,38 @@ export function CreativeFeature({
   titles: string[]
 }) {
   const scene = images.gallery[0]
-  const src = photoSrc(scene)
+  const cutout = images.creativeCutout
+  const page = 'absolute inset-x-[8%] inset-y-[16%] flex flex-col md:grid md:grid-cols-2'
   return (
     <Link
       to={to}
       className="group relative block min-h-dvh overflow-hidden border-t border-edge"
     >
-      {/* the field, full bleed */}
-      <img src={src} alt={photoAlt(scene)} className="absolute inset-0 h-full w-full object-cover" />
+      {/* 1 — the full piece */}
+      <img
+        src={photoSrc(scene)}
+        alt={photoAlt(scene)}
+        className="absolute inset-0 h-full w-full object-cover"
+      />
 
-      {/* the page laid over it */}
-      <div className="absolute inset-x-[8%] inset-y-[16%] flex flex-col border border-paper/60 shadow-2xl md:grid md:grid-cols-2">
-        {/* cut window — the scene shows through, framed twice like a plate */}
-        <div className="relative min-h-40 flex-1 border border-accent-2 md:min-h-0">
-          <div aria-hidden className="absolute inset-3 border border-accent" />
-        </div>
-        {/* the text leaf */}
-        <div className="flex flex-col items-center justify-center gap-4 bg-paper/95 px-8 py-10 text-center backdrop-blur-sm md:px-12">
+      {/* 2 — the page: solid frame with its center cut out, solid text panel */}
+      <div className={`${page} shadow-2xl`}>
+        <div className="min-h-40 flex-1 border-[2.5rem] border-paper md:min-h-0" />
+        <div className="min-h-0 flex-1 bg-paper" />
+      </div>
+
+      {/* 3 — the subject with its sky removed, popping over the page */}
+      <img
+        src={photoSrc(cutout)}
+        alt=""
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-10 h-full w-full object-cover"
+      />
+
+      {/* 4 — the text, above everything */}
+      <div className={`${page} pointer-events-none z-20`}>
+        <div className="min-h-40 flex-1 md:min-h-0" />
+        <div className="pointer-events-auto flex min-h-0 flex-1 flex-col items-center justify-end gap-4 px-8 py-10 pb-14 text-center md:px-12">
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
             Chapter {number}
           </p>
@@ -287,15 +302,7 @@ export function CreativeFeature({
         </div>
       </div>
 
-      {/* the tree again, masked soft, popping through the page */}
-      <img
-        src={src}
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover [mask-image:radial-gradient(ellipse_22%_28%_at_29%_22%,black_55%,transparent_82%),radial-gradient(ellipse_25%_32%_at_44%_50%,black_50%,transparent_78%),radial-gradient(ellipse_20%_26%_at_23%_76%,black_55%,transparent_82%)]"
-      />
-
-      <p className="absolute right-[9%] bottom-[10%] font-sans text-[9px] font-bold tracking-[0.3em] uppercase text-paper drop-shadow-md">
+      <p className="absolute right-[9%] bottom-[10%] z-20 font-sans text-[9px] font-bold tracking-[0.3em] uppercase text-paper drop-shadow-md">
         Reading the night
       </p>
     </Link>
