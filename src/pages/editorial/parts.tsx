@@ -392,27 +392,16 @@ export function AdvocacyFeature({
 }
 
 /**
- * The Editing chapter as the pasted-scrap collage: an artwork carries the
- * top, then a typed note below with a handwritten scrap column and a
- * hand-script sign-off.
+ * The Editing chapter: a thin typed note — header on the left, the note and
+ * client project on the right — with the artwork below.
  */
 export function EditingFeature({ to, number }: { to: string; number: string }) {
   const artwork = images.gallery[5]
   const { heading, blurb, paragraphs, project } = site.editing
   return (
     <Link to={to} className="group block border-t border-edge">
-      {/* the artwork carries the top on its own */}
-      <div className="relative h-[52vh] overflow-hidden md:h-[58vh]">
-        <img
-          src={photoSrc(artwork)}
-          alt={photoAlt(artwork)}
-          className="h-full w-full object-cover"
-        />
-      </div>
-
-      {/* the typed note + the handwritten scrap */}
-      <div className="border-t border-edge bg-paper md:grid md:grid-cols-3">
-        <div className="px-8 py-10 md:col-span-2 md:px-14 md:py-12">
+      <div className="bg-paper px-8 py-8 md:grid md:grid-cols-2 md:gap-12 md:px-14 md:py-10">
+        <div>
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
             Chapter {number} · freelance
           </p>
@@ -421,7 +410,9 @@ export function EditingFeature({ to, number }: { to: string; number: string }) {
           </h2>
           <p className="mt-3 font-body text-sm italic text-muted">{blurb}</p>
           <span aria-hidden className="mt-5 block w-10 border-t border-edge" />
-          <div className="mt-5 max-w-md space-y-3 text-justify font-body text-[12.5px] leading-relaxed text-ink">
+        </div>
+        <div className="mt-6 md:mt-0">
+          <div className="max-w-md space-y-3 text-justify font-body text-[12.5px] leading-relaxed text-ink">
             {paragraphs.map((paragraph) => (
               <p key={paragraph.slice(0, 24)}>{paragraph}</p>
             ))}
@@ -433,10 +424,7 @@ export function EditingFeature({ to, number }: { to: string; number: string }) {
               .
             </p>
           </div>
-          <div className="mt-10 flex items-end justify-between gap-6">
-            <p className="-rotate-2 font-hand text-3xl text-accent-2 md:text-4xl">
-              see you in the margins ✎
-            </p>
+          <div className="mt-6 flex justify-end">
             <span
               aria-hidden
               className="border-b border-edge pb-0.5 font-sans text-[10px] tracking-[0.25em] uppercase text-muted transition-colors group-hover:border-accent-2 group-hover:text-accent-2"
@@ -445,19 +433,15 @@ export function EditingFeature({ to, number }: { to: string; number: string }) {
             </span>
           </div>
         </div>
-        <div className="relative border-t border-edge bg-surface px-8 py-10 md:border-t-0 md:border-l md:px-10 md:py-12">
-          <div className="space-y-3 font-hand text-2xl leading-snug text-ink/80">
-            <p>margins welcome —</p>
-            <p>red pen ready</p>
-            <p>send pages ✎</p>
-          </div>
-          <p
-            aria-hidden
-            className="absolute right-6 bottom-6 font-hand text-4xl text-muted/60"
-          >
-            ✳
-          </p>
-        </div>
+      </div>
+
+      {/* the artwork below the note */}
+      <div className="relative h-[52vh] overflow-hidden border-t border-edge md:h-[58vh]">
+        <img
+          src={photoSrc(artwork)}
+          alt={photoAlt(artwork)}
+          className="h-full w-full object-cover"
+        />
       </div>
     </Link>
   )
@@ -496,7 +480,7 @@ export function DarkFooter() {
       />
       <div
         aria-hidden
-        className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-ink"
+        className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-ink/0 to-ink"
       />
       <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-3 pb-10">
         <button
