@@ -345,7 +345,7 @@ export function AdvocacyFeature({
         src={src}
         alt=""
         aria-hidden
-        className="absolute inset-0 h-full w-full scale-110 object-cover blur-md"
+        className="absolute inset-0 h-full w-full scale-110 object-cover blur-[2px]"
       />
       <div aria-hidden className="absolute inset-0 bg-ink/35" />
 
