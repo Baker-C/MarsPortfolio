@@ -1,7 +1,7 @@
 // Semantic image slots. Components ask for a slot, never a file path.
-// No real photos exist yet, so every slot is placeholder line-art rendered by
-// src/components/ui/ArtPlaceholder.tsx in theme colors. When real images land,
-// change a slot to { kind: 'photo', src, alt } and nothing else moves.
+// Current photos are openly-licensed stand-ins from Wikimedia Commons
+// (see public/photos/CREDITS.md — CC BY-SA attribution required if shipped).
+// Swap a slot's src when Marlee's real images land and nothing else moves.
 
 export type ArtTone = 'accent' | 'accent2' | 'muted' | 'highlight'
 export type ArtMotif = 'poppy' | 'iris' | 'lily' | 'meadow' | 'ridge' | 'moth'
@@ -12,10 +12,10 @@ export type ImageSlot =
 
 export const images = {
   hero: {
-    kind: 'art',
-    motif: 'meadow',
-    tone: 'accent',
-    alt: 'Line drawing of a wildflower meadow at dusk',
+    kind: 'photo',
+    src: '/photos/fog-field-tall.jpg',
+    alt: 'Tall pines in thick morning fog, a pale sun behind them',
+    caption: 'Photo: Dietmar Rabich · CC BY-SA 4.0',
   } satisfies ImageSlot as ImageSlot,
 
   aboutPortrait: {
@@ -27,46 +27,46 @@ export const images = {
 
   gallery: [
     {
-      kind: 'art',
-      motif: 'poppy',
-      tone: 'accent',
-      alt: 'Study of poppies against clouds',
-      caption: 'Poppy study, gouache',
+      kind: 'photo',
+      src: '/photos/fog-field-wide.jpg',
+      alt: 'A hedgerow of trees dissolving into fog across a field',
+      caption: 'Photo: Dietmar Rabich · CC BY-SA 4.0',
     },
     {
-      kind: 'art',
-      motif: 'iris',
-      tone: 'accent2',
-      alt: 'Iris petals in ink',
-      caption: 'Iris, ink on paper',
+      kind: 'photo',
+      src: '/photos/meadow-stream.jpg',
+      alt: 'A small stream winding through a rough green meadow',
+      caption: 'Photo: Dietmar Rabich · CC BY-SA 4.0',
     },
     {
-      kind: 'art',
-      motif: 'lily',
-      tone: 'highlight',
-      alt: 'Lily pads on still water',
-      caption: 'Pond series, no. 3',
+      kind: 'photo',
+      src: '/photos/meadow-wide.jpg',
+      alt: 'An open meadow of long grass under a broad sky',
+      caption: 'Photo: Dietmar Rabich · CC BY-SA 4.0',
     },
     {
-      kind: 'art',
-      motif: 'ridge',
-      tone: 'muted',
-      alt: 'A granite ridge over treeline',
-      caption: 'Ridge line, graphite',
+      kind: 'photo',
+      src: '/photos/park-trees.jpg',
+      alt: 'Old park trees standing in soft light',
+      caption: 'Photo: Dietmar Rabich · CC BY-SA 4.0',
     },
     {
-      kind: 'art',
-      motif: 'meadow',
-      tone: 'accent2',
-      alt: 'Tall grasses with seed heads',
-      caption: 'Grasslands, screen print',
+      kind: 'photo',
+      src: '/photos/moss-gorge-tall.jpg',
+      alt: 'Mossy boulders in a shaded stream gorge',
+      caption: 'Photo: Dietmar Rabich · CC BY-SA 4.0',
     },
     {
-      kind: 'art',
-      motif: 'moth',
-      tone: 'accent',
-      alt: 'A moth drawn from a pinned specimen',
-      caption: 'Specimen drawing',
+      kind: 'photo',
+      src: '/photos/pond-reflection.jpg',
+      alt: 'A tree reflected in the still surface of a pond',
+      caption: 'Photo: W.carter · public domain',
+    },
+    {
+      kind: 'photo',
+      src: '/photos/green-hills.jpg',
+      alt: 'Green mountain pasture falling away into hazy ridges',
+      caption: 'Photo: rybakot · CC BY-SA 3.0',
     },
   ] satisfies ImageSlot[] as ImageSlot[],
 }

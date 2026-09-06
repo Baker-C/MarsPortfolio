@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router'
-import { Base } from './pages/Base'
+import { Home } from './pages/Home'
 
-// Clean slate: a single base route while the next design direction is decided.
-export const router = createBrowserRouter([{ path: '/', element: <Base /> }])
+// Nature-editorial mock: one spread while the design direction settles.
+export const router = createBrowserRouter([{ path: '/', element: <Home /> }])
