@@ -318,26 +318,26 @@ export function AdvocacyFeature({
 }
 
 /**
- * The Editing chapter: the artwork on top, then a thin typed note — header on
- * the left, the note and client project on the right.
+ * The Editing chapter: the whole note sits as a centered ink panel inside the
+ * ring, after the creative section's text box.
  */
 export function EditingFeature({ number }: { number: string }) {
   const artwork = images.gallery[5]
   const { heading, blurb, paragraphs, project, poem } = site.editing
   return (
     <section id="editing" className="block border-t border-edge">
-      <div className="bg-ink px-8 py-8 md:grid md:grid-cols-2 md:gap-12 md:px-14 md:py-10">
-        <div>
+      {/* the artwork, whole and matted in white like a print,
+          with a stanza gated on each side of the ring */}
+      <div className="relative bg-white p-5 md:p-8">
+        <div className="absolute top-1/2 left-1/2 z-10 flex w-[80%] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-4 bg-ink/90 px-8 py-10 text-center shadow-2xl md:w-[32%] md:px-10">
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-paper/60">
             Chapter {number} · freelance
           </p>
-          <h2 className="mt-2 font-display text-2xl font-light tracking-[0.3em] uppercase text-paper md:text-3xl">
+          <h2 className="font-display text-2xl font-light tracking-[0.3em] uppercase text-paper md:text-3xl">
             {heading}
           </h2>
-          <p className="mt-3 font-body text-sm italic text-paper/60">{blurb}</p>
-          <span aria-hidden className="mt-5 block w-10 border-t border-paper/40" />
-        </div>
-        <div className="mt-6 md:mt-0">
+          <p className="font-body text-sm italic text-paper/60">{blurb}</p>
+          <span aria-hidden className="w-10 border-t border-paper/40" />
           <div className="max-w-md space-y-3 text-justify font-body text-[12.5px] leading-relaxed text-paper/90">
             {paragraphs.map((paragraph) => (
               <p key={paragraph.slice(0, 24)}>{paragraph}</p>
@@ -356,11 +356,6 @@ export function EditingFeature({ number }: { number: string }) {
             </p>
           </div>
         </div>
-      </div>
-
-      {/* the artwork below the note, whole and matted in white like a print,
-          with a stanza gated on each side of the ring */}
-      <div className="relative bg-white p-5 md:p-8">
         <img
           src={photoSrc(artwork)}
           alt={photoAlt(artwork)}
