@@ -309,19 +309,19 @@ export function EditingFeature({ number }: { number: string }) {
         />
       </div>
 
-      <div className="border-t border-edge bg-paper px-8 py-8 md:grid md:grid-cols-2 md:gap-12 md:px-14 md:py-10">
+      <div className="bg-ink px-8 py-8 md:grid md:grid-cols-2 md:gap-12 md:px-14 md:py-10">
         <div>
-          <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
+          <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-paper/60">
             Chapter {number} · freelance
           </p>
-          <h2 className="mt-2 font-display text-2xl font-light tracking-[0.3em] uppercase text-ink md:text-3xl">
+          <h2 className="mt-2 font-display text-2xl font-light tracking-[0.3em] uppercase text-paper md:text-3xl">
             {heading}
           </h2>
-          <p className="mt-3 font-body text-sm italic text-muted">{blurb}</p>
-          <span aria-hidden className="mt-5 block w-10 border-t border-edge" />
+          <p className="mt-3 font-body text-sm italic text-paper/60">{blurb}</p>
+          <span aria-hidden className="mt-5 block w-10 border-t border-paper/40" />
         </div>
         <div className="mt-6 md:mt-0">
-          <div className="max-w-md space-y-3 text-justify font-body text-[12.5px] leading-relaxed text-ink">
+          <div className="max-w-md space-y-3 text-justify font-body text-[12.5px] leading-relaxed text-paper/90">
             {paragraphs.map((paragraph) => (
               <p key={paragraph.slice(0, 24)}>{paragraph}</p>
             ))}
@@ -331,7 +331,7 @@ export function EditingFeature({ number }: { number: string }) {
                 href={project.href}
                 target="_blank"
                 rel="noreferrer"
-                className="font-bold text-accent-2 underline decoration-2 underline-offset-2 transition-colors hover:text-ink"
+                className="font-bold text-highlight underline decoration-2 underline-offset-2 transition-colors hover:text-paper"
               >
                 {project.label}
               </a>
