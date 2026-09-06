@@ -85,7 +85,8 @@ export function Hero() {
   const below = images.gallery[2]
   const seamWindow = images.gallery[5]
   return (
-    <section className="relative h-dvh overflow-hidden bg-surface">
+    <section className="block bg-white p-5 md:p-8">
+      <div className="relative h-[calc(100dvh-2.5rem)] overflow-hidden bg-surface md:h-[calc(100dvh-4rem)]">
       <div className="absolute inset-x-0 top-0 h-1/2 overflow-hidden">
         <img
           src={photoSrc(above)}
@@ -121,6 +122,7 @@ export function Hero() {
       <p className="absolute bottom-2 left-3 font-sans text-[8px] tracking-widest uppercase text-ink/60">
         Collage art · Marlee Baker
       </p>
+      </div>
     </section>
   )
 }
@@ -174,10 +176,8 @@ export function CreativeFeature({
   const scene = images.gallery[0]
   const cutout = images.creativeCutout
   return (
-    <section
-      id="creative"
-      className="relative block min-h-dvh overflow-hidden border-t border-edge"
-    >
+    <section id="creative" className="block border-t border-edge bg-white p-5 md:p-8">
+      <div className="relative min-h-dvh overflow-hidden">
       {/* 1 — the full piece */}
       <img
         src={photoSrc(scene)}
@@ -241,6 +241,7 @@ export function CreativeFeature({
       <p className="absolute right-[9%] bottom-[10%] z-20 font-sans text-[9px] font-bold tracking-[0.3em] uppercase text-paper drop-shadow-md">
         Reading the night
       </p>
+      </div>
     </section>
   )
 }
@@ -310,7 +311,6 @@ export function AdvocacyFeature({
               </li>
             ))}
           </ol>
-          <p className="mt-7 font-body text-[12.5px] italic text-ink">From, Marlee</p>
         </div>
       </div>
     </section>
@@ -329,7 +329,8 @@ export function EditingFeature({ number }: { number: string }) {
       {/* the artwork, whole and matted in white like a print,
           with a stanza gated on each side of the ring */}
       <div className="relative bg-white p-5 md:p-8">
-        <div className="absolute top-1/2 left-1/2 z-10 flex w-[80%] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-4 bg-ink/90 px-8 py-10 text-center shadow-2xl md:w-[32%] md:px-10">
+        {/* on md+ the panel is a disc sized to the ring's inner circle */}
+        <div className="absolute top-1/2 left-1/2 z-10 flex w-[80%] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-4 bg-ink/90 px-8 py-10 text-center shadow-2xl md:aspect-square md:w-[34%] md:justify-center md:rounded-full md:px-14 md:py-0">
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-paper/60">
             Chapter {number} · freelance
           </p>
@@ -338,21 +339,20 @@ export function EditingFeature({ number }: { number: string }) {
           </h2>
           <p className="font-body text-sm italic text-paper/60">{blurb}</p>
           <span aria-hidden className="w-10 border-t border-paper/40" />
-          <div className="max-w-md space-y-3 text-justify font-body text-[12.5px] leading-relaxed text-paper/90">
+          <div className="max-w-md space-y-3 text-center font-body text-[12.5px] leading-relaxed text-paper/90">
             {paragraphs.map((paragraph) => (
               <p key={paragraph.slice(0, 24)}>{paragraph}</p>
             ))}
             <p>
-              A recent client project:{' '}
+              A recent client project
               <a
                 href={project.href}
                 target="_blank"
                 rel="noreferrer"
-                className="font-bold text-highlight underline decoration-2 underline-offset-2 transition-colors hover:text-paper"
+                className="mt-1 block font-bold text-highlight underline decoration-2 underline-offset-2 transition-colors hover:text-paper"
               >
                 {project.label}
               </a>
-              .
             </p>
           </div>
         </div>
