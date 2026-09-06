@@ -5,13 +5,14 @@ rationale lives in `battles/css-architecture.md` and `battles/theme-concept.md`.
 
 ## Structure
 
-- Three parallel design versions live under `src/designs/design1|2|3/` (Field
-  Journal / Poster / Collage), routed at `/design1`–`/design3`; `/` is the
-  design chooser. Each design owns its whole subtree; shared layers below it.
+- Clean slate: `/` renders the single design-free base page
+  (`src/pages/Base.tsx`) while the next design direction is decided. The three
+  earlier design versions (Field Journal / Poster / Collage) were removed and
+  live in git history (`feature/real-content` and before).
 - Layers, one-way: pages → components → tokens, content feeds pages as data.
   - `src/index.css` — ALL visual constants (Tailwind 4 `@theme` tokens + six
     `[data-theme]` palettes). The only CSS file.
-  - `src/content/` — all words, pieces (markdown + manifest), image slots.
+  - `src/content/` — all words, pieces (link-out manifest), image slots.
   - `src/components/` — shared primitives (`ui/`), paginated reader (`reader/`).
   - `src/theme/` — theme registry, `ThemeScope`, `ThemeSwitcher`.
 
