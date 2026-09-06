@@ -47,9 +47,10 @@ rationale lives in `battles/css-architecture.md` and `battles/theme-concept.md`.
    layer importing `src/content/`.
 4. Images only through semantic slots in `src/content/images.ts` (`{src, alt}`
    or placeholder art descriptors). Never a raw path in a component.
-5. Pages fit the viewport — no page scrolling. Long text goes through the
-   shared paginated Reader (book-style prev/next). Growable collections
-   (writing index, gallery) page in place instead of scrolling.
+5. The nature-editorial direction scrolls vertically (Chad's 2026-09-06
+   decision, superseding the old no-scroll rule): long pages read as stacked
+   zine spreads. No horizontal page scrolling. The shared paginated Reader
+   stays available for any future on-site full text.
 6. Adding a writing piece = one markdown file in `src/content/writing/` + one
    manifest entry. Placeholder content is clearly placeholder; don't invent
    real-sounding contact details.
