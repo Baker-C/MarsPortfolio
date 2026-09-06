@@ -308,22 +308,24 @@ export function EditingFeature({ number }: { number: string }) {
           alt={photoAlt(artwork)}
           className="w-full"
         />
-        <div className="absolute inset-y-[4%] left-[6%] hidden w-[12%] md:block">
-          <p className="flex h-full flex-col justify-between font-body text-[12.5px] italic text-white/90">
-            {poem.left.map((line) => (
-              <span key={line} className="block">
-                {line}
-              </span>
-            ))}
+        {/* each half floats an ellipse matching the ring, so the verse wraps
+            the curve like the reference posters */}
+        <div className="absolute inset-y-[4%] left-[6%] right-1/2 hidden overflow-hidden md:block">
+          <div
+            aria-hidden
+            className="float-right h-full w-[66%] [shape-outside:ellipse(107%_48%_at_100%_50%)]"
+          />
+          <p className="text-justify font-body text-[15px] italic leading-loose text-white/90">
+            {poem.left.join(' ')}
           </p>
         </div>
-        <div className="absolute inset-y-[4%] right-[6%] hidden w-[12%] md:block">
-          <p className="flex h-full flex-col justify-between text-right font-body text-[12.5px] italic text-white/90">
-            {poem.right.map((line) => (
-              <span key={line} className="block">
-                {line}
-              </span>
-            ))}
+        <div className="absolute inset-y-[4%] left-1/2 right-[6%] hidden overflow-hidden md:block">
+          <div
+            aria-hidden
+            className="float-left h-full w-[66%] [shape-outside:ellipse(107%_48%_at_0%_50%)]"
+          />
+          <p className="text-justify font-body text-[15px] italic leading-loose text-white/90">
+            {poem.right.join(' ')}
           </p>
         </div>
       </div>
