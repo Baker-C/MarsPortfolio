@@ -259,7 +259,7 @@ export function CreativeFeature({
       {/* 2 — the window box: a solid paper frame with its center cut out */}
       <div
         aria-hidden
-        className="absolute inset-y-[24%] left-[6%] hidden w-[46%] border-[2.5rem] border-paper/85 shadow-2xl md:block"
+        className="absolute inset-y-[24%] left-[6%] hidden w-[46%] border-[2.5rem] border-ink/85 shadow-2xl md:block"
       />
 
       {/* 3 — the subject with its sky removed, popping through the window */}
@@ -271,25 +271,25 @@ export function CreativeFeature({
       />
 
       {/* 4 — the text box, a separate solid panel above the cutout */}
-      <div className="absolute inset-x-[8%] inset-y-[24%] z-20 flex flex-col bg-paper/85 shadow-2xl md:left-[52%] md:w-[40%]">
+      <div className="absolute inset-x-[8%] inset-y-[24%] z-20 flex flex-col bg-ink/85 shadow-2xl md:left-[52%] md:w-[40%]">
         {/* soft entry: the cutout fades under the panel instead of hard-cutting */}
         <div
           aria-hidden
-          className="absolute inset-y-0 -left-14 hidden w-14 bg-gradient-to-l from-paper/85 to-transparent md:block"
+          className="absolute inset-y-0 -left-14 hidden w-14 bg-gradient-to-l from-ink/85 to-transparent md:block"
         />
         <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-4 px-8 py-10 text-center md:px-12">
-          <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
+          <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-paper/60">
             Chapter {number}
           </p>
-          <h2 className="font-display text-3xl font-light tracking-[0.35em] uppercase text-ink transition-colors group-hover:text-accent-2 md:text-4xl">
+          <h2 className="font-display text-3xl font-light tracking-[0.35em] uppercase text-paper transition-colors group-hover:text-highlight md:text-4xl">
             {label}
           </h2>
-          <p className="font-sans text-[10px] tracking-[0.25em] uppercase text-muted">{note}</p>
-          <span aria-hidden className="w-10 border-t border-edge" />
+          <p className="font-sans text-[10px] tracking-[0.25em] uppercase text-paper/60">{note}</p>
+          <span aria-hidden className="w-10 border-t border-paper/40" />
           <ol className="space-y-1.5">
             {titles.map((title, idx) => (
-              <li key={title} className="font-body text-[12px] italic leading-snug text-ink/80">
-                <span className="mr-2 font-sans text-[9px] not-italic tracking-widest text-muted">
+              <li key={title} className="font-body text-[12px] italic leading-snug text-paper/90">
+                <span className="mr-2 font-sans text-[9px] not-italic tracking-widest text-paper/50">
                   {String(idx + 1).padStart(2, '0')}
                 </span>
                 {title}
@@ -298,7 +298,7 @@ export function CreativeFeature({
           </ol>
           <span
             aria-hidden
-            className="mt-2 border-b border-edge pb-1 font-sans text-[10px] tracking-[0.25em] uppercase text-muted transition-colors group-hover:border-accent-2 group-hover:text-accent-2"
+            className="mt-2 border-b border-paper/40 pb-1 font-sans text-[10px] tracking-[0.25em] uppercase text-paper/70 transition-colors group-hover:border-highlight group-hover:text-highlight"
           >
             Enter →
           </span>
