@@ -5,18 +5,18 @@ import {
   DarkFooter,
   EditingSpread,
   PageShell,
-  SectionDivider,
+  SectionBand,
   WorkSpread,
 } from './editorial/parts'
 
 const slugToSection = { creative: 'creative', advocacy: 'professional' } as const
 
-/** Variant B chapter page — scroll through one section's works as spreads. */
+/** Variant B chapter page — scroll through one section's full-bleed spreads. */
 export function SectionWorks() {
   const { sectionSlug = '' } = useParams()
 
-  const back = (
-    <div className="pb-10 text-center">
+  const backBand = (
+    <div className="bg-ink py-8 text-center">
       <Link
         to="/b"
         className="border-b border-paper/40 pb-0.5 font-sans text-[10px] tracking-[0.25em] uppercase text-paper/70 transition-colors hover:border-paper hover:text-paper"
@@ -29,10 +29,10 @@ export function SectionWorks() {
   if (sectionSlug === 'editing') {
     return (
       <PageShell>
-        <div className="min-h-dvh space-y-14 bg-ink px-4 pt-24 pb-4 md:px-8">
-          <SectionDivider label="The Desk" />
+        <div className="pt-14">
+          <SectionBand label="The Desk" />
           <EditingSpread />
-          {back}
+          {backBand}
           <DarkFooter />
         </div>
       </PageShell>
@@ -45,10 +45,10 @@ export function SectionWorks() {
 
   return (
     <PageShell>
-      <div className="min-h-dvh space-y-14 bg-ink px-4 pt-24 pb-4 md:space-y-20 md:px-8">
+      <div className="pt-14">
         {section ? (
           <>
-            <SectionDivider
+            <SectionBand
               label={`${section.label} — ${String(group.length).padStart(2, '0')} pieces`}
             />
             {group.map((piece, idx) => (
@@ -62,9 +62,9 @@ export function SectionWorks() {
             ))}
           </>
         ) : (
-          <SectionDivider label="No such chapter" />
+          <SectionBand label="No such chapter" />
         )}
-        {back}
+        {backBand}
         <DarkFooter />
       </div>
     </PageShell>

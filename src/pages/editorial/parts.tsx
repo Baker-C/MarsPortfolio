@@ -132,7 +132,7 @@ export function AboutSpread() {
   )
 }
 
-/** One work as a cream zine spread floating on the dark ground. */
+/** One work as a full-bleed zine spread: photo half, paper half. */
 export function WorkSpread({
   piece,
   slot,
@@ -145,11 +145,11 @@ export function WorkSpread({
   flip?: boolean
 }) {
   return (
-    <article className="mx-auto w-full max-w-4xl bg-paper shadow-2xl md:grid md:grid-cols-2">
-      <div className={`h-64 md:h-auto ${flip ? 'md:order-2' : ''}`}>
+    <article className="w-full border-t border-edge bg-paper md:grid md:min-h-dvh md:grid-cols-2">
+      <div className={`h-72 md:h-auto ${flip ? 'md:order-2' : ''}`}>
         <ArtPlaceholder slot={slot} />
       </div>
-      <div className="flex flex-col px-8 py-8 md:min-h-[68vh] md:px-12 md:py-10">
+      <div className="flex flex-col px-8 py-10 md:min-h-dvh md:px-14 md:py-12">
         <div className="flex items-baseline justify-between font-sans text-[9px] tracking-widest uppercase text-muted">
           <span>{piece.kind}</span>
           <span>{String(index + 1).padStart(2, '0')}</span>
@@ -184,24 +184,24 @@ export function WorkSpread({
   )
 }
 
-/** Quiet register line between groups on the dark ground. */
-export function SectionDivider({ label }: { label: string }) {
+/** Slim full-width register band between groups. */
+export function SectionBand({ label }: { label: string }) {
   return (
-    <p className="text-center font-sans text-[10px] tracking-[0.35em] uppercase text-paper/60">
+    <div className="bg-ink py-6 text-center font-sans text-[10px] tracking-[0.35em] uppercase text-paper/70">
       {label}
-    </p>
+    </div>
   )
 }
 
-/** The editing desk as its own cream spread. */
+/** The editing desk as its own full-bleed spread. */
 export function EditingSpread() {
   const { heading, blurb, paragraphs, project } = site.editing
   return (
-    <article className="mx-auto w-full max-w-4xl bg-paper shadow-2xl md:grid md:grid-cols-2">
-      <div className="h-64 md:h-auto">
+    <article className="w-full border-t border-edge bg-paper md:grid md:min-h-dvh md:grid-cols-2">
+      <div className="h-72 md:h-auto">
         <ArtPlaceholder slot={images.gallery[1]} />
       </div>
-      <div className="flex flex-col items-center justify-center px-8 py-10 text-center md:min-h-[60vh] md:px-12">
+      <div className="flex flex-col items-center justify-center px-8 py-12 text-center md:min-h-dvh md:px-14">
         <h3 className="font-display text-2xl font-light tracking-[0.35em] uppercase text-ink">
           {heading}
         </h3>
@@ -228,11 +228,57 @@ export function EditingSpread() {
   )
 }
 
-/** Footer strip on the dark ground. */
+/** Footer band on the dark ground. */
 export function DarkFooter() {
   return (
-    <footer className="pt-8 pb-10 text-center font-sans text-[9px] tracking-[0.3em] uppercase text-paper/50">
+    <footer className="bg-ink py-10 text-center font-sans text-[9px] tracking-[0.3em] uppercase text-paper/50">
       {site.title} · {site.contact.email}
     </footer>
+  )
+}
+
+/**
+ * A chapter as its own full-viewport section: photo half, cover-page half.
+ * The whole section links into the chapter's scroll page.
+ */
+export function ChapterSection({
+  to,
+  number,
+  label,
+  note,
+  slot,
+  flip = false,
+}: {
+  to: string
+  number: string
+  label: string
+  note: string
+  slot: ImageSlot
+  flip?: boolean
+}) {
+  return (
+    <Link
+      to={to}
+      className="group block w-full border-t border-edge bg-paper md:grid md:min-h-dvh md:grid-cols-2"
+    >
+      <div className={`h-72 md:h-auto ${flip ? 'md:order-2' : ''}`}>
+        <ArtPlaceholder slot={slot} />
+      </div>
+      <div className="flex flex-col items-center justify-center gap-4 px-8 py-16 text-center md:min-h-dvh md:px-14">
+        <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
+          Chapter {number}
+        </p>
+        <h2 className="font-display text-3xl font-light tracking-[0.35em] uppercase text-ink transition-colors group-hover:text-accent-2 md:text-4xl">
+          {label}
+        </h2>
+        <p className="font-sans text-[10px] tracking-[0.25em] uppercase text-muted">{note}</p>
+        <span
+          aria-hidden
+          className="mt-3 border-b border-edge pb-1 font-sans text-[10px] tracking-[0.25em] uppercase text-muted transition-colors group-hover:border-accent-2 group-hover:text-accent-2"
+        >
+          Enter →
+        </span>
+      </div>
+    </Link>
   )
 }
