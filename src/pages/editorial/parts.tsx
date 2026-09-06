@@ -244,7 +244,6 @@ export function CreativeFeature({
 }) {
   const scene = images.gallery[0]
   const cutout = images.creativeCutout
-  const page = 'absolute inset-x-[8%] inset-y-[16%] flex flex-col md:grid md:grid-cols-2'
   return (
     <Link
       to={to}
@@ -257,13 +256,13 @@ export function CreativeFeature({
         className="absolute inset-0 h-full w-full object-cover"
       />
 
-      {/* 2 — the page: solid frame with its center cut out, solid text panel */}
-      <div className={`${page} shadow-2xl`}>
-        <div className="min-h-40 flex-1 border-[2.5rem] border-paper md:min-h-0" />
-        <div className="min-h-0 flex-1 bg-paper" />
-      </div>
+      {/* 2 — the window box: a solid paper frame with its center cut out */}
+      <div
+        aria-hidden
+        className="absolute inset-y-[24%] left-[6%] hidden w-[46%] border-[2.5rem] border-paper shadow-2xl md:block"
+      />
 
-      {/* 3 — the subject with its sky removed, popping over the page */}
+      {/* 3 — the subject with its sky removed, popping through the window */}
       <img
         src={photoSrc(cutout)}
         alt=""
@@ -271,10 +270,9 @@ export function CreativeFeature({
         className="pointer-events-none absolute inset-0 z-10 h-full w-full object-cover"
       />
 
-      {/* 4 — the text, above everything */}
-      <div className={`${page} pointer-events-none z-20`}>
-        <div className="min-h-40 flex-1 md:min-h-0" />
-        <div className="pointer-events-auto flex min-h-0 flex-1 flex-col items-center justify-end gap-4 px-8 py-10 pb-14 text-center md:px-12">
+      {/* 4 — the text box, a separate solid panel above the cutout */}
+      <div className="absolute inset-x-[8%] inset-y-[24%] z-20 flex flex-col bg-paper shadow-2xl md:left-[52%] md:w-[40%]">
+        <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-4 px-8 py-10 text-center md:px-12">
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
             Chapter {number}
           </p>
