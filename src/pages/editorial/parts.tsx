@@ -29,15 +29,15 @@ export function PageShell({ children }: { children: ReactNode }) {
           {site.name}
         </Link>
         <span aria-hidden className="h-2.5 border-l border-edge" />
-        <Link to="/creative" className="text-muted transition-colors hover:text-accent-2">
+        <a href="#creative" className="text-muted transition-colors hover:text-accent-2">
           Creative
-        </Link>
-        <Link to="/advocacy" className="text-muted transition-colors hover:text-accent-2">
+        </a>
+        <a href="#advocacy" className="text-muted transition-colors hover:text-accent-2">
           Advocacy
-        </Link>
-        <Link to="/editing" className="text-muted transition-colors hover:text-accent-2">
+        </a>
+        <a href="#editing" className="text-muted transition-colors hover:text-accent-2">
           Editing
-        </Link>
+        </a>
       </nav>
       {children}
     </ThemeScope>
@@ -128,102 +128,6 @@ export function AboutSpread() {
   )
 }
 
-/** One work as a full-bleed zine spread: photo half, paper half. */
-export function WorkSpread({
-  piece,
-  slot,
-  index,
-  flip = false,
-}: {
-  piece: Piece
-  slot: ImageSlot
-  index: number
-  flip?: boolean
-}) {
-  return (
-    <article className="w-full border-t border-edge bg-paper md:grid md:min-h-dvh md:grid-cols-2">
-      <div className={`h-72 md:h-auto ${flip ? 'md:order-2' : ''}`}>
-        <ArtPlaceholder slot={slot} />
-      </div>
-      <div className="flex flex-col px-8 py-10 md:min-h-dvh md:px-14 md:py-12">
-        <div className="flex items-baseline justify-between font-sans text-[9px] tracking-widest uppercase text-muted">
-          <span>{piece.kind}</span>
-          <span>{String(index + 1).padStart(2, '0')}</span>
-        </div>
-        <div className="flex flex-1 flex-col items-center justify-center text-center">
-          <h3 className="max-w-sm font-display text-2xl font-light leading-snug text-ink md:text-3xl">
-            {piece.title}
-          </h3>
-          <p className="mt-3 font-sans text-[9px] tracking-[0.25em] uppercase text-muted">
-            {piece.venue} · {piece.year}
-          </p>
-          <span aria-hidden className="mt-6 w-10 border-t border-edge" />
-          <p className="mt-6 max-w-xs text-justify font-body text-[12.5px] leading-relaxed text-ink">
-            {piece.excerpt}
-          </p>
-          {piece.credit && (
-            <p className="mt-4 max-w-xs font-sans text-[8.5px] tracking-widest uppercase text-muted">
-              {piece.credit}
-            </p>
-          )}
-          <a
-            href={piece.url}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-8 border-b border-accent-2 pb-0.5 font-sans text-[10px] tracking-[0.25em] uppercase text-accent-2 transition-colors hover:border-ink hover:text-ink"
-          >
-            Read the original ↗
-          </a>
-        </div>
-      </div>
-    </article>
-  )
-}
-
-/** Slim full-width register band between groups. */
-export function SectionBand({ label }: { label: string }) {
-  return (
-    <div className="bg-ink py-6 text-center font-sans text-[10px] tracking-[0.35em] uppercase text-paper/70">
-      {label}
-    </div>
-  )
-}
-
-/** The editing desk as its own full-bleed spread. */
-export function EditingSpread() {
-  const { heading, blurb, paragraphs, project } = site.editing
-  return (
-    <article className="w-full border-t border-edge bg-paper md:grid md:min-h-dvh md:grid-cols-2">
-      <div className="h-72 md:h-auto">
-        <ArtPlaceholder slot={images.gallery[1]} />
-      </div>
-      <div className="flex flex-col items-center justify-center px-8 py-12 text-center md:min-h-dvh md:px-14">
-        <h3 className="font-display text-2xl font-light tracking-[0.35em] uppercase text-ink">
-          {heading}
-        </h3>
-        <p className="mt-3 font-body text-sm italic text-muted">{blurb}</p>
-        <span aria-hidden className="mt-6 w-10 border-t border-edge" />
-        <div className="mt-6 max-w-xs space-y-3 text-justify font-body text-[12.5px] leading-relaxed text-ink">
-          {paragraphs.map((paragraph) => (
-            <p key={paragraph.slice(0, 24)}>{paragraph}</p>
-          ))}
-        </div>
-        <p className="mt-7 font-sans text-[9px] tracking-[0.25em] uppercase text-muted">
-          {project.note}
-        </p>
-        <a
-          href={project.href}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-2 border-b border-accent-2 pb-0.5 font-sans text-[10px] tracking-[0.25em] uppercase text-accent-2 transition-colors hover:border-ink hover:text-ink"
-        >
-          {project.label} ↗
-        </a>
-      </div>
-    </article>
-  )
-}
-
 /**
  * The Creative chapter as a "Reading the Tree" feature: one background
  * photograph, a translucent page laid over it (cut window left, text right),
@@ -231,24 +135,22 @@ export function EditingSpread() {
  * the page.
  */
 export function CreativeFeature({
-  to,
   number,
   label,
   note,
-  titles,
+  pieces,
 }: {
-  to: string
   number: string
   label: string
   note: string
-  titles: string[]
+  pieces: Piece[]
 }) {
   const scene = images.gallery[0]
   const cutout = images.creativeCutout
   return (
-    <Link
-      to={to}
-      className="group relative block min-h-dvh overflow-hidden border-t border-edge"
+    <section
+      id="creative"
+      className="relative block min-h-dvh overflow-hidden border-t border-edge"
     >
       {/* 1 — the full piece */}
       <img
@@ -285,34 +187,35 @@ export function CreativeFeature({
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-paper/60">
             Chapter {number}
           </p>
-          <h2 className="font-display text-3xl font-light tracking-[0.35em] uppercase text-paper transition-colors group-hover:text-highlight md:text-4xl">
+          <h2 className="font-display text-3xl font-light tracking-[0.35em] uppercase text-paper md:text-4xl">
             {label}
           </h2>
           <p className="font-sans text-[10px] tracking-[0.25em] uppercase text-paper/60">{note}</p>
           <span aria-hidden className="w-10 border-t border-paper/40" />
           <ol className="space-y-1.5">
-            {titles.map((title, idx) => (
-              <li key={title} className="font-body text-[12px] italic leading-snug text-paper/90">
+            {pieces.map((piece, idx) => (
+              <li key={piece.slug} className="font-body text-[12px] italic leading-snug">
                 <span className="mr-2 font-sans text-[9px] not-italic tracking-widest text-paper/50">
                   {String(idx + 1).padStart(2, '0')}
                 </span>
-                {title}
+                <a
+                  href={piece.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-paper/90 underline decoration-paper/30 underline-offset-2 transition-colors hover:text-highlight hover:decoration-highlight"
+                >
+                  {piece.title}
+                </a>
               </li>
             ))}
           </ol>
-          <span
-            aria-hidden
-            className="mt-2 border-b border-paper/40 pb-1 font-sans text-[10px] tracking-[0.25em] uppercase text-paper/70 transition-colors group-hover:border-highlight group-hover:text-highlight"
-          >
-            Enter →
-          </span>
         </div>
       </div>
 
       <p className="absolute right-[9%] bottom-[10%] z-20 font-sans text-[9px] font-bold tracking-[0.3em] uppercase text-paper drop-shadow-md">
         Reading the night
       </p>
-    </Link>
+    </section>
   )
 }
 
@@ -321,24 +224,22 @@ export function CreativeFeature({
  * and blurred behind, then sharp inside the cream card, letter text below.
  */
 export function AdvocacyFeature({
-  to,
   number,
   label,
   note,
-  titles,
+  pieces,
 }: {
-  to: string
   number: string
   label: string
   note: string
-  titles: string[]
+  pieces: Piece[]
 }) {
   const scene = images.gallery[3]
   const src = photoSrc(scene)
   return (
-    <Link
-      to={to}
-      className="group relative block overflow-hidden border-t border-edge py-14 md:py-20"
+    <section
+      id="advocacy"
+      className="relative block overflow-hidden border-t border-edge py-14 md:py-20"
     >
       {/* the same scene, blurred, as the ground */}
       <img
@@ -358,7 +259,7 @@ export function AdvocacyFeature({
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
             Chapter {number} · {note}
           </p>
-          <h2 className="mt-2 font-display text-2xl font-light tracking-[0.3em] uppercase text-ink transition-colors group-hover:text-accent-2">
+          <h2 className="mt-2 font-display text-2xl font-light tracking-[0.3em] uppercase text-ink">
             {label}
           </h2>
           <p className="mt-4 max-w-md text-justify font-body text-[12.5px] leading-relaxed text-ink">
@@ -367,27 +268,26 @@ export function AdvocacyFeature({
             Housing Council of Oregon.
           </p>
           <ol className="mt-5 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-3">
-            {titles.map((title, idx) => (
-              <li key={title} className="flex gap-2 font-body text-[11.5px] leading-snug text-ink/80">
+            {pieces.map((piece, idx) => (
+              <li key={piece.slug} className="flex gap-2 font-body text-[11.5px] leading-snug">
                 <span className="shrink-0 pt-px font-sans text-[8.5px] tracking-widest text-muted">
                   {String(idx + 1).padStart(2, '0')}
                 </span>
-                <span>{title}</span>
+                <a
+                  href={piece.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-ink/80 underline decoration-edge underline-offset-2 transition-colors hover:text-accent-2 hover:decoration-accent-2"
+                >
+                  {piece.title}
+                </a>
               </li>
             ))}
           </ol>
-          <div className="mt-7 flex items-baseline justify-between">
-            <p className="font-body text-[12.5px] italic text-ink">From, Marlee</p>
-            <span
-              aria-hidden
-              className="border-b border-edge pb-0.5 font-sans text-[10px] tracking-[0.25em] uppercase text-muted transition-colors group-hover:border-accent-2 group-hover:text-accent-2"
-            >
-              Enter →
-            </span>
-          </div>
+          <p className="mt-7 font-body text-[12.5px] italic text-ink">From, Marlee</p>
         </div>
       </div>
-    </Link>
+    </section>
   )
 }
 
@@ -395,11 +295,11 @@ export function AdvocacyFeature({
  * The Editing chapter: the artwork on top, then a thin typed note — header on
  * the left, the note and client project on the right.
  */
-export function EditingFeature({ to, number }: { to: string; number: string }) {
+export function EditingFeature({ number }: { number: string }) {
   const artwork = images.gallery[5]
   const { heading, blurb, paragraphs, project } = site.editing
   return (
-    <Link to={to} className="group block border-t border-edge">
+    <section id="editing" className="block border-t border-edge">
       {/* the artwork above the note, whole and matted in white like a print */}
       <div className="bg-white p-5 md:p-8">
         <img
@@ -414,7 +314,7 @@ export function EditingFeature({ to, number }: { to: string; number: string }) {
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
             Chapter {number} · freelance
           </p>
-          <h2 className="mt-2 font-display text-2xl font-light tracking-[0.3em] uppercase text-ink transition-colors group-hover:text-accent-2 md:text-3xl">
+          <h2 className="mt-2 font-display text-2xl font-light tracking-[0.3em] uppercase text-ink md:text-3xl">
             {heading}
           </h2>
           <p className="mt-3 font-body text-sm italic text-muted">{blurb}</p>
@@ -427,23 +327,20 @@ export function EditingFeature({ to, number }: { to: string; number: string }) {
             ))}
             <p>
               A recent client project:{' '}
-              <span className="font-bold text-accent-2 underline decoration-2 underline-offset-2">
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noreferrer"
+                className="font-bold text-accent-2 underline decoration-2 underline-offset-2 transition-colors hover:text-ink"
+              >
                 {project.label}
-              </span>
+              </a>
               .
             </p>
           </div>
-          <div className="mt-6 flex justify-end">
-            <span
-              aria-hidden
-              className="border-b border-edge pb-0.5 font-sans text-[10px] tracking-[0.25em] uppercase text-muted transition-colors group-hover:border-accent-2 group-hover:text-accent-2"
-            >
-              Enter →
-            </span>
-          </div>
         </div>
       </div>
-    </Link>
+    </section>
   )
 }
 
@@ -502,54 +399,3 @@ export function DarkFooter() {
   )
 }
 
-/**
- * A chapter as its own full-viewport section: photo half, cover-page half.
- * With `to` it links into the chapter's page; without, it is the chapter
- * page's own static cover (scroll cue instead of an enter link).
- */
-export function ChapterSection({
-  to,
-  number,
-  label,
-  note,
-  slot,
-  flip = false,
-}: {
-  to?: string
-  number: string
-  label: string
-  note: string
-  slot: ImageSlot
-  flip?: boolean
-}) {
-  const inner = (
-    <>
-      <div className={`h-72 md:h-auto ${flip ? 'md:order-2' : ''}`}>
-        <ArtPlaceholder slot={slot} />
-      </div>
-      <div className="flex flex-col items-center justify-center gap-4 px-8 py-16 text-center md:min-h-dvh md:px-14">
-        <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
-          Chapter {number}
-        </p>
-        <h2 className="font-display text-3xl font-light tracking-[0.35em] uppercase text-ink transition-colors group-hover:text-accent-2 md:text-4xl">
-          {label}
-        </h2>
-        <p className="font-sans text-[10px] tracking-[0.25em] uppercase text-muted">{note}</p>
-        <span
-          aria-hidden
-          className="mt-3 border-b border-edge pb-1 font-sans text-[10px] tracking-[0.25em] uppercase text-muted transition-colors group-hover:border-accent-2 group-hover:text-accent-2"
-        >
-          {to ? 'Enter →' : '↓'}
-        </span>
-      </div>
-    </>
-  )
-  const cls = 'group block w-full border-t border-edge bg-paper md:grid md:min-h-dvh md:grid-cols-2'
-  return to ? (
-    <Link to={to} className={cls}>
-      {inner}
-    </Link>
-  ) : (
-    <header className={cls}>{inner}</header>
-  )
-}
