@@ -389,7 +389,7 @@ export function DarkFooter() {
   }
 
   return (
-    <footer className="bg-gradient-to-b from-white via-ink via-50% to-ink">
+    <footer className="bg-gradient-to-b from-white to-ink">
       <div className="flex flex-col items-center gap-3 pt-44 pb-10 md:pt-52">
         <button
           type="button"
