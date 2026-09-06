@@ -416,15 +416,18 @@ export function EditingFeature({ to, number }: { to: string; number: string }) {
       <div className="border-t border-edge bg-paper md:grid md:grid-cols-3">
         <div className="px-8 py-10 md:col-span-2 md:px-14 md:py-12">
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
-            Chapter {number} · {heading} · {blurb}
+            Chapter {number} · freelance
           </p>
-          <div className="mt-6 max-w-md space-y-4 font-sans text-[12px] leading-relaxed tracking-wide text-ink">
+          <h2 className="mt-2 font-display text-2xl font-light tracking-[0.3em] uppercase text-ink transition-colors group-hover:text-accent-2 md:text-3xl">
+            {heading}
+          </h2>
+          <p className="mt-3 font-body text-sm italic text-muted">{blurb}</p>
+          <span aria-hidden className="mt-5 block w-10 border-t border-edge" />
+          <div className="mt-5 max-w-md space-y-3 text-justify font-body text-[12.5px] leading-relaxed text-ink">
             {paragraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 24)} className="text-justify">
-                {paragraph}
-              </p>
+              <p key={paragraph.slice(0, 24)}>{paragraph}</p>
             ))}
-            <p className="text-justify">
+            <p>
               A recent client project:{' '}
               <span className="font-bold text-accent-2 underline decoration-2 underline-offset-2">
                 {project.label}
