@@ -4,9 +4,9 @@ import { site } from '../content/site'
 import {
   AboutSpread,
   AdvocacyFeature,
-  ChapterSection,
   CreativeFeature,
   DarkFooter,
+  EditingFeature,
   Hero,
   PageShell,
 } from './editorial/parts'
@@ -47,14 +47,7 @@ export function Home() {
         note={chapters[1].note}
         titles={pieces.filter((p) => p.section === 'professional').map((p) => p.title)}
       />
-      <ChapterSection
-        to="/editing"
-        number="03"
-        label={chapters[2].label}
-        note={chapters[2].note}
-        slot={chapters[2].slot}
-        flip
-      />
+      <EditingFeature to="/editing" number="03" />
       <DarkFooter />
     </PageShell>
   )

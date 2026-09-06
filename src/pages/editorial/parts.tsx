@@ -385,6 +385,83 @@ export function AdvocacyFeature({
   )
 }
 
+/**
+ * The Editing chapter as the pasted-scrap collage: a green hillside with a
+ * grayscale photo strip pasted over it, then a typed note below with a
+ * handwritten scrap column and a hand-script sign-off.
+ */
+export function EditingFeature({ to, number }: { to: string; number: string }) {
+  const hillside = images.gallery[1]
+  const strip = images.hero
+  const { heading, blurb, paragraphs, project } = site.editing
+  return (
+    <Link to={to} className="group block border-t border-edge">
+      {/* the hillside with the pasted strip */}
+      <div className="relative h-[52vh] overflow-hidden md:h-[58vh]">
+        <img
+          src={photoSrc(hillside)}
+          alt={photoAlt(hillside)}
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute top-[16%] left-1/2 w-[72%] max-w-xl -translate-x-1/2 -rotate-1 shadow-2xl md:w-[56%]">
+          <img
+            src={photoSrc(strip)}
+            alt={photoAlt(strip)}
+            className="h-32 w-full object-cover object-center grayscale md:h-40"
+          />
+        </div>
+      </div>
+
+      {/* the typed note + the handwritten scrap */}
+      <div className="border-t border-edge bg-paper md:grid md:grid-cols-3">
+        <div className="px-8 py-10 md:col-span-2 md:px-14 md:py-12">
+          <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
+            Chapter {number} · {heading} · {blurb}
+          </p>
+          <div className="mt-6 max-w-md space-y-4 font-sans text-[12px] leading-relaxed tracking-wide text-ink">
+            {paragraphs.map((paragraph) => (
+              <p key={paragraph.slice(0, 24)} className="text-justify">
+                {paragraph}
+              </p>
+            ))}
+            <p className="text-justify">
+              A recent client project:{' '}
+              <span className="font-bold text-accent-2 underline decoration-2 underline-offset-2">
+                {project.label}
+              </span>
+              .
+            </p>
+          </div>
+          <div className="mt-10 flex items-end justify-between gap-6">
+            <p className="-rotate-2 font-hand text-3xl text-accent-2 md:text-4xl">
+              see you in the margins ✎
+            </p>
+            <span
+              aria-hidden
+              className="border-b border-edge pb-0.5 font-sans text-[10px] tracking-[0.25em] uppercase text-muted transition-colors group-hover:border-accent-2 group-hover:text-accent-2"
+            >
+              Enter →
+            </span>
+          </div>
+        </div>
+        <div className="relative border-t border-edge bg-surface px-8 py-10 md:border-t-0 md:border-l md:px-10 md:py-12">
+          <div className="space-y-3 font-hand text-2xl leading-snug text-ink/80">
+            <p>margins welcome —</p>
+            <p>red pen ready</p>
+            <p>send pages ✎</p>
+          </div>
+          <p
+            aria-hidden
+            className="absolute right-6 bottom-6 font-hand text-4xl text-muted/60"
+          >
+            ✳
+          </p>
+        </div>
+      </div>
+    </Link>
+  )
+}
+
 /** Footer band on the dark ground. */
 export function DarkFooter() {
   return (

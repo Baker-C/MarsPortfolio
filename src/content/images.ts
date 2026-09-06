@@ -35,7 +35,7 @@ export const images = {
     {
       kind: 'photo',
       src: '/photos/meadow-stream.jpg',
-      alt: 'A small stream winding through a rough green meadow',
+      alt: 'Cattle by a farmstead in hazy orange morning light',
       caption: 'Photo: Dietmar Rabich · CC BY-SA 4.0',
     },
     {
