@@ -231,6 +231,85 @@ export function EditingSpread() {
   )
 }
 
+/**
+ * The Creative chapter as a "Reading the Tree" feature: one background
+ * photograph, a translucent page laid over it (cut window left, text right),
+ * and the photo's subject re-overlaid with a soft mask so it pops through
+ * the page.
+ */
+export function CreativeFeature({
+  to,
+  number,
+  label,
+  note,
+  titles,
+}: {
+  to: string
+  number: string
+  label: string
+  note: string
+  titles: string[]
+}) {
+  const scene = images.gallery[0]
+  const src = photoSrc(scene)
+  return (
+    <Link
+      to={to}
+      className="group relative block min-h-dvh overflow-hidden border-t border-edge"
+    >
+      {/* the field, full bleed */}
+      <img src={src} alt={photoAlt(scene)} className="absolute inset-0 h-full w-full object-cover" />
+
+      {/* the page laid over it */}
+      <div className="absolute inset-x-[8%] inset-y-[16%] flex flex-col border border-paper/60 shadow-2xl md:grid md:grid-cols-2">
+        {/* cut window — the field shows through, framed twice like a plate */}
+        <div className="relative min-h-40 flex-1 md:min-h-0">
+          <div aria-hidden className="absolute inset-3 border border-paper/70" />
+        </div>
+        {/* the text leaf */}
+        <div className="flex flex-col items-center justify-center gap-4 bg-paper/90 px-8 py-10 text-center backdrop-blur-[2px] md:px-12">
+          <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
+            Chapter {number}
+          </p>
+          <h2 className="font-display text-3xl font-light tracking-[0.35em] uppercase text-ink transition-colors group-hover:text-accent-2 md:text-4xl">
+            {label}
+          </h2>
+          <p className="font-sans text-[10px] tracking-[0.25em] uppercase text-muted">{note}</p>
+          <span aria-hidden className="w-10 border-t border-edge" />
+          <ol className="space-y-1.5">
+            {titles.map((title, idx) => (
+              <li key={title} className="font-body text-[12px] italic leading-snug text-ink/80">
+                <span className="mr-2 font-sans text-[9px] not-italic tracking-widest text-muted">
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+                {title}
+              </li>
+            ))}
+          </ol>
+          <span
+            aria-hidden
+            className="mt-2 border-b border-edge pb-1 font-sans text-[10px] tracking-[0.25em] uppercase text-muted transition-colors group-hover:border-accent-2 group-hover:text-accent-2"
+          >
+            Enter →
+          </span>
+        </div>
+      </div>
+
+      {/* the tree again, masked soft, popping through the page */}
+      <img
+        src={src}
+        alt=""
+        aria-hidden
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover [mask-image:radial-gradient(ellipse_26%_34%_at_50%_16%,black_42%,transparent_75%)]"
+      />
+
+      <p className="absolute right-[9%] bottom-[10%] font-sans text-[9px] font-bold tracking-[0.3em] uppercase text-paper drop-shadow-md">
+        Reading the field
+      </p>
+    </Link>
+  )
+}
+
 /** Footer band on the dark ground. */
 export function DarkFooter() {
   return (
