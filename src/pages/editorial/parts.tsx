@@ -297,16 +297,35 @@ export function AdvocacyFeature({
  */
 export function EditingFeature({ number }: { number: string }) {
   const artwork = images.gallery[5]
-  const { heading, blurb, paragraphs, project } = site.editing
+  const { heading, blurb, paragraphs, project, poem } = site.editing
   return (
     <section id="editing" className="block border-t border-edge">
-      {/* the artwork above the note, whole and matted in white like a print */}
-      <div className="bg-white p-5 md:p-8">
+      {/* the artwork above the note, whole and matted in white like a print,
+          with a stanza gated on each side of the ring */}
+      <div className="relative bg-white p-5 md:p-8">
         <img
           src={photoSrc(artwork)}
           alt={photoAlt(artwork)}
           className="w-full"
         />
+        <div className="absolute inset-y-[4%] left-[6%] hidden w-[12%] md:block">
+          <p className="flex h-full flex-col justify-between font-body text-[12.5px] italic text-white/90">
+            {poem.left.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
+          </p>
+        </div>
+        <div className="absolute inset-y-[4%] right-[6%] hidden w-[12%] md:block">
+          <p className="flex h-full flex-col justify-between text-right font-body text-[12.5px] italic text-white/90">
+            {poem.right.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
+          </p>
+        </div>
       </div>
 
       <div className="bg-ink px-8 py-8 md:grid md:grid-cols-2 md:gap-12 md:px-14 md:py-10">
