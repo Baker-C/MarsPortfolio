@@ -1,4 +1,5 @@
 import { Link } from 'react-router'
+import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { site } from '../../content/site'
 import { images } from '../../content/images'
@@ -344,12 +345,12 @@ export function AdvocacyFeature({
         src={src}
         alt=""
         aria-hidden
-        className="absolute inset-0 h-full w-full scale-110 object-cover blur-lg"
+        className="absolute inset-0 h-full w-full scale-110 object-cover blur-md"
       />
       <div aria-hidden className="absolute inset-0 bg-ink/35" />
 
       {/* the letter card */}
-      <div className="relative mx-auto w-[88%] max-w-xl bg-paper p-5 shadow-2xl md:p-7">
+      <div className="relative mx-auto w-[88%] max-w-3xl bg-paper p-5 shadow-2xl md:p-7">
         <div className="aspect-[4/3] overflow-hidden">
           <img src={src} alt={photoAlt(scene)} className="h-full w-full object-cover" />
         </div>
@@ -365,7 +366,7 @@ export function AdvocacyFeature({
             policy to Oregon’s housing history, written and produced at the Fair
             Housing Council of Oregon.
           </p>
-          <ol className="mt-5 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2">
+          <ol className="mt-5 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-3">
             {titles.map((title, idx) => (
               <li key={title} className="flex gap-2 font-body text-[11.5px] leading-snug text-ink/80">
                 <span className="shrink-0 pt-px font-sans text-[8.5px] tracking-widest text-muted">
@@ -391,16 +392,16 @@ export function AdvocacyFeature({
 }
 
 /**
- * The Editing chapter as the pasted-scrap collage: a green hillside with a
- * grayscale photo strip pasted over it, then a typed note below with a
- * handwritten scrap column and a hand-script sign-off.
+ * The Editing chapter as the pasted-scrap collage: an artwork carries the
+ * top, then a typed note below with a handwritten scrap column and a
+ * hand-script sign-off.
  */
 export function EditingFeature({ to, number }: { to: string; number: string }) {
-  const artwork = images.gallery[1]
+  const artwork = images.gallery[3]
   const { heading, blurb, paragraphs, project } = site.editing
   return (
     <Link to={to} className="group block border-t border-edge">
-      {/* THE NEW — the artwork carries the top on its own */}
+      {/* the artwork carries the top on its own */}
       <div className="relative h-[52vh] overflow-hidden md:h-[58vh]">
         <img
           src={photoSrc(artwork)}
@@ -462,11 +463,57 @@ export function EditingFeature({ to, number }: { to: string; number: string }) {
   )
 }
 
-/** Footer band on the dark ground. */
+/**
+ * Footer: the THE NEW collage top-aligned, its bottom half fading into the
+ * dark ground, with the email as a click-to-copy title over the fade.
+ */
 export function DarkFooter() {
+  const artwork = images.gallery[1]
+  const email = site.contact.email
+  const [copied, setCopied] = useState(false)
+
+  async function copyEmail() {
+    try {
+      await navigator.clipboard.writeText(email)
+    } catch {
+      const textArea = document.createElement('textarea')
+      textArea.value = email
+      document.body.appendChild(textArea)
+      textArea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textArea)
+    }
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1600)
+  }
+
   return (
-    <footer className="bg-ink py-10 text-center font-sans text-[9px] tracking-[0.3em] uppercase text-paper/50">
-      {site.title} · {site.contact.email}
+    <footer className="relative overflow-hidden bg-ink">
+      <img
+        src={photoSrc(artwork)}
+        alt={photoAlt(artwork)}
+        className="h-[60vh] w-full object-cover object-top md:h-[70vh]"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-ink"
+      />
+      <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-3 pb-10">
+        <button
+          type="button"
+          onClick={copyEmail}
+          aria-label={`Copy email ${email}`}
+          className="cursor-pointer font-display text-2xl font-light tracking-[0.2em] text-paper transition-colors hover:text-highlight md:text-4xl"
+        >
+          {email}
+        </button>
+        <p className="font-sans text-[9px] tracking-[0.3em] uppercase text-paper/50">
+          {copied ? 'copied ✓' : 'click to copy'}
+        </p>
+        <p className="mt-4 font-sans text-[9px] tracking-[0.3em] uppercase text-paper/40">
+          {site.title}
+        </p>
+      </div>
     </footer>
   )
 }
