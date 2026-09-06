@@ -259,7 +259,7 @@ export function CreativeFeature({
       {/* 2 — the window box: a solid paper frame with its center cut out */}
       <div
         aria-hidden
-        className="absolute inset-y-[24%] left-[6%] hidden w-[46%] border-[2.5rem] border-paper shadow-2xl md:block"
+        className="absolute inset-y-[24%] left-[6%] hidden w-[46%] border-[2.5rem] border-paper/85 shadow-2xl md:block"
       />
 
       {/* 3 — the subject with its sky removed, popping through the window */}
@@ -271,7 +271,12 @@ export function CreativeFeature({
       />
 
       {/* 4 — the text box, a separate solid panel above the cutout */}
-      <div className="absolute inset-x-[8%] inset-y-[24%] z-20 flex flex-col bg-paper shadow-2xl md:left-[52%] md:w-[40%]">
+      <div className="absolute inset-x-[8%] inset-y-[24%] z-20 flex flex-col bg-paper/85 shadow-2xl md:left-[52%] md:w-[40%]">
+        {/* soft entry: the cutout fades under the panel instead of hard-cutting */}
+        <div
+          aria-hidden
+          className="absolute inset-y-0 -left-14 hidden w-14 bg-gradient-to-l from-paper/85 to-transparent md:block"
+        />
         <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-4 px-8 py-10 text-center md:px-12">
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted">
             Chapter {number}
