@@ -405,7 +405,7 @@ export function EditingFeature({ to, number }: { to: string; number: string }) {
         <img
           src={photoSrc(artwork)}
           alt={photoAlt(artwork)}
-          className="mx-auto h-[48vh] object-contain md:h-[56vh]"
+          className="w-full"
         />
       </div>
 
