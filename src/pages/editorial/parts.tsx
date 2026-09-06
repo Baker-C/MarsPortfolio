@@ -140,7 +140,7 @@ export function Hero() {
 export function AboutSpread() {
   const flora = images.gallery[4]
   return (
-    <section className="md:grid md:min-h-dvh md:grid-cols-2">
+    <section className="border-t border-edge md:grid md:min-h-dvh md:grid-cols-2">
       <div className="h-80 md:h-auto">
         <ArtPlaceholder slot={flora} />
       </div>
