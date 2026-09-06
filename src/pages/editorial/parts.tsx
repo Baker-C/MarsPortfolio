@@ -110,11 +110,8 @@ export function Hero() {
         />
       </div>
 
-      <p className="absolute top-7 left-1/2 -translate-x-1/2 bg-ink/85 px-6 py-2 text-center font-sans text-lg tracking-[0.4em] whitespace-nowrap uppercase text-paper backdrop-blur-sm">
-        {site.name}
-      </p>
       <div className="absolute inset-x-0 bottom-7 flex flex-col items-center gap-2 px-6 text-ink">
-        <p className="max-w-md bg-paper/80 px-4 py-1 text-center font-body text-sm italic backdrop-blur-sm">
+        <p className="max-w-md bg-ink/85 px-4 py-1.5 text-center font-body text-sm italic text-paper backdrop-blur-sm">
           {site.tagline}
         </p>
         <span aria-hidden className="font-sans text-sm">
