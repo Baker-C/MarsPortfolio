@@ -333,7 +333,7 @@ export function AdvocacyFeature({
   note: string
   titles: string[]
 }) {
-  const scene = images.gallery[6]
+  const scene = images.gallery[3]
   const src = photoSrc(scene)
   return (
     <Link
@@ -397,7 +397,7 @@ export function AdvocacyFeature({
  * hand-script sign-off.
  */
 export function EditingFeature({ to, number }: { to: string; number: string }) {
-  const artwork = images.gallery[3]
+  const artwork = images.gallery[5]
   const { heading, blurb, paragraphs, project } = site.editing
   return (
     <Link to={to} className="group block border-t border-edge">
