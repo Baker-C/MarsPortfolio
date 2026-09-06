@@ -256,11 +256,14 @@ export function CreativeFeature({
         className="absolute inset-0 h-full w-full object-cover"
       />
 
-      {/* 2 — the window box: a solid paper frame with its center cut out */}
+      {/* 2 — the window box: a frame with its center cut out, its right side
+             fading out to blend into the text panel */}
       <div
         aria-hidden
-        className="absolute inset-y-[24%] left-[6%] hidden w-[46%] border-[2.5rem] border-ink/85 shadow-2xl md:block"
-      />
+        className="absolute inset-y-[24%] left-[6%] hidden w-[46%] border-[2.5rem] border-r-0 border-ink/85 shadow-2xl md:block"
+      >
+        <div className="absolute -top-10 -bottom-10 right-0 w-14 bg-gradient-to-r from-ink/85 to-transparent" />
+      </div>
 
       {/* 3 — the subject with its sky removed, popping through the window */}
       <img
